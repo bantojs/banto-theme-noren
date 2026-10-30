@@ -1,0 +1,17 @@
+<section class="not-found page-width page-width--narrow">
+  <h1>{{ 'not_found.title' | t }}</h1>
+  <p>{{ 'not_found.text' | t }}</p>
+  <form class="search-inline" action="{{ routes.search_url }}" method="get" role="search">
+    <label class="visually-hidden" for="NotFoundSearch">{{ 'general.search' | t }}</label>
+    <input id="NotFoundSearch" type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}">
+    <button type="submit" class="button button--secondary">{{ 'general.search' | t }}</button>
+  </form>
+  <p><a class="button" href="{{ routes.root_url }}">{{ 'general.continue_shopping' | t }}</a></p>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_404.name",
+  "settings": []
+}
+{% endschema %}

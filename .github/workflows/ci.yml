@@ -1,0 +1,37 @@
+name: ci
+on: [push, pull_request]
+
+# 読むだけ（Secret は使わない）
+permissions:
+  contents: read
+
+env:
+  # 描いて確かめる Banto の版（対応する版を上げるときにここを変える。README の「対応する Banto の版」も）
+  BANTO_REF: v0.4.2
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          path: noren
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          repository: bantojs/banto
+          ref: ${{ env.BANTO_REF }}
+          path: banto
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: banto/package-lock.json
+      - run: npm ci
+        working-directory: banto
+      # Banto のテストの道具（FakeSupabase・Browser）と取り込みの検査で、テーマのすべてのページを描く（test/render.test.ts）
+      - run: cp ../noren/test/render.test.ts test/noren-render.test.ts
+        working-directory: banto
+      - run: npx vitest run test/noren-render.test.ts
+        working-directory: banto
+        env:
+          NOREN_DIR: ${{ github.workspace }}/noren

@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "main-collection", "settings": { "show_heading": true, "show_tags": true } }
+  },
+  "order": ["main"]
+}

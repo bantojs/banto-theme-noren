@@ -1,0 +1,24 @@
+{%- comment -%}
+  画像（Banto の画像は本画像（長辺 1600px）とサムネイル（長辺 400px）の 2 つ。幅 400 以下を求めるとサムネイル）。
+  - image: 画像
+  - sizes: sizes 属性
+  - alt: 代わりの文字（任意。無ければ画像の alt）
+  - loading: lazy（既定）/ eager
+  - class: img のクラス
+{%- endcomment -%}
+{%- liquid
+  assign alt_text = alt | default: image.alt
+  assign load = loading | default: 'lazy'
+  assign thumb = image | image_url: width: 400
+  assign full = image | image_url
+-%}
+<img
+  src="{{ full }}"
+  {% if image.width and image.width > 400 %}srcset="{{ thumb }} 400w, {{ full }} {{ image.width }}w" sizes="{{ sizes | default: '100vw' }}"{% endif %}
+  alt="{{ alt_text }}"
+  {% if image.width and image.height %}width="{{ image.width }}" height="{{ image.height }}"{% endif %}
+  loading="{{ load }}"
+  {% if load == 'eager' %}fetchpriority="high"{% endif %}
+  decoding="async"
+  {% if class %}class="{{ class }}"{% endif %}
+>

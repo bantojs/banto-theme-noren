@@ -1,0 +1,79 @@
+{%- comment -%}
+  カート。数を変える・外すは JS が無くても動く（{% form 'cart' %} と item.url_to_remove）。
+  送料と送料無料のクーポンは、配送先が決まってから最終確認の画面で出る
+{%- endcomment -%}
+{%- assign shop_root = routes.cart_url | remove_last: '/cart' -%}
+<section class="cart page-width">
+  <h1>{{ 'cart.title' | t }}</h1>
+  {%- if cart_error -%}
+    <p class="notice notice--error" role="alert">{{ cart_error }}</p>
+  {%- endif -%}
+
+  {%- if cart.empty -%}
+    <p class="empty">{{ 'cart.empty' | t }}</p>
+    <p><a class="button button--secondary" href="{{ routes.root_url }}">{{ 'general.continue_shopping' | t }}</a></p>
+  {%- else -%}
+    {%- assign has_short = false -%}
+    {%- form 'cart', cart, class: 'cart-form' -%}
+      <table class="cart-table">
+        <caption class="visually-hidden">{{ 'cart.title' | t }}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{{ 'cart.product' | t }}</th>
+            <th scope="col">{{ 'cart.quantity' | t }}</th>
+            <th scope="col" class="cart-table__total">{{ 'cart.line_total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            {%- unless item.available %}{% assign has_short = true %}{% endunless -%}
+            <tr class="cart-item{% unless item.available %} cart-item--short{% endunless %}">
+              <td class="cart-item__product">
+                <div class="cart-item__media">
+                  {%- if item.image -%}
+                    {{ item.image | image_url: width: 160 | image_tag: alt: item.product_title, width: 80 }}
+                  {%- endif -%}
+                </div>
+                <div>
+                  <a href="{{ item.url }}">{{ item.product_title }}</a>
+                  {%- if item.variant_title -%}<p class="cart-item__variant">{{ item.variant_title }}</p>{%- endif -%}
+                  <p class="cart-item__price">{{ item.price | money }}</p>
+                  {%- unless item.available -%}<p class="notice notice--error">{{ 'cart.short' | t }}</p>{%- endunless -%}
+                </div>
+              </td>
+              <td class="cart-item__quantity">
+                <label class="visually-hidden" for="Updates-{{ forloop.index }}">{{ 'cart.quantity_for' | t: title: item.title }}</label>
+                <input id="Updates-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" max="99" inputmode="numeric">
+                <a class="cart-item__remove" href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}<span class="visually-hidden">: {{ item.title }}</span></a>
+              </td>
+              <td class="cart-table__total">{{ item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div class="cart__footer">
+        <dl class="totals">
+          <div><dt>{{ 'cart.subtotal' | t }}</dt><dd>{{ cart.items_subtotal_price | money }}</dd></div>
+          {%- for discount in cart.cart_level_discount_applications -%}
+            <div><dt>{{ discount.title }}</dt><dd>-{{ discount.total_allocated_amount | money }}</dd></div>
+          {%- endfor -%}
+          <div class="totals__total"><dt>{{ 'cart.total' | t }}</dt><dd>{{ cart.total_price | money }}</dd></div>
+        </dl>
+        <p class="cart__note">{{ 'cart.tax_included' | t }} {{ 'cart.shipping_later' | t }} <a href="{{ shop_root }}/shipping">{{ 'cart.shipping_link' | t }}</a></p>
+        <div class="cart__buttons">
+          <button type="submit" name="update" class="button button--secondary">{{ 'cart.update' | t }}</button>
+          <button type="submit" name="checkout" class="button"{% if has_short %} disabled{% endif %}>{{ 'cart.checkout' | t }}</button>
+        </div>
+      </div>
+    {%- endform -%}
+    <p><a href="{{ routes.root_url }}">{{ 'general.continue_shopping' | t }}</a></p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_cart.name",
+  "settings": []
+}
+{% endschema %}

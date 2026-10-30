@@ -1,0 +1,36 @@
+{%- comment -%}
+  文章のセクション。中身はテーマのブロック（blocks/text・blocks/button）を並べる（{% content_for 'blocks' %} の見本）
+{%- endcomment -%}
+<section class="rich-text rich-text--{{ section.settings.align }}">
+  <div class="page-width page-width--narrow">
+    {% content_for 'blocks' %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.rich_text.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "align",
+      "label": "t:sections.rich_text.align",
+      "options": [
+        { "value": "left", "label": "t:sections.rich_text.left" },
+        { "value": "center", "label": "t:sections.rich_text.center" }
+      ],
+      "default": "center"
+    }
+  ],
+  "blocks": [{ "type": "@theme" }],
+  "presets": [
+    {
+      "name": "t:sections.rich_text.name",
+      "blocks": [
+        { "type": "text", "settings": { "text": "<p>Noren</p>", "style": "heading" } },
+        { "type": "text", "settings": { "text": "<p></p>", "style": "body" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,40 @@
+{%- comment -%}
+  値段（税込）。セールなら元の値段を線で消して並べる。
+  - product: 商品
+  - variant: SKU（任意。無ければ商品の最安）
+{%- endcomment -%}
+{%- liquid
+  if variant
+    assign price = variant.price
+    assign compare_at = variant.compare_at_price
+  else
+    assign price = product.price
+    assign compare_at = product.compare_at_price
+  endif
+  assign on_sale = false
+  if compare_at and price and compare_at > price
+    assign on_sale = true
+  endif
+-%}
+<div class="price{% if on_sale %} price--sale{% endif %}" data-noren-price>
+  {%- if price == nil -%}
+    <span class="price__unavailable">{{ 'products.unavailable' | t }}</span>
+  {%- else -%}
+    {%- if on_sale -%}
+      <span class="visually-hidden">{{ 'products.sale_price' | t }}</span>
+    {%- endif -%}
+    <span class="price__current">
+      {%- if variant == nil and product.price_varies -%}
+        {%- capture from_price %}{{ price | money }}{% endcapture -%}
+        {{ 'products.price_from' | t: price: from_price }}
+      {%- else -%}
+        {{ price | money }}
+      {%- endif -%}
+    </span>
+    {%- if on_sale -%}
+      <span class="visually-hidden">{{ 'products.regular_price' | t }}</span>
+      <s class="price__compare">{{ compare_at | money }}</s>
+    {%- endif -%}
+    <span class="price__tax">{{ 'products.tax_included' | t }}</span>
+  {%- endif -%}
+</div>

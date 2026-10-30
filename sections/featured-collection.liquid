@@ -1,0 +1,24 @@
+{%- comment -%}
+  おすすめの商品（トップと一覧のページで使える。collection はそのページの商品の 1 ページ目）
+{%- endcomment -%}
+{%- if collection.products.size > 0 -%}
+  <section class="featured page-width">
+    {%- if section.settings.heading != blank -%}<h2 class="section-heading">{{ section.settings.heading }}</h2>{%- endif -%}
+    <ul class="grid" role="list">
+      {%- for product in collection.products limit: section.settings.products_to_show -%}
+        {%- render 'product-card', product: product -%}
+      {%- endfor -%}
+    </ul>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.featured_collection.name",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "t:sections.featured_collection.heading", "default": "" },
+    { "type": "range", "id": "products_to_show", "label": "t:sections.featured_collection.products_to_show", "min": 2, "max": 24, "step": 1, "default": 8 }
+  ],
+  "presets": [{ "name": "t:sections.featured_collection.name" }]
+}
+{% endschema %}

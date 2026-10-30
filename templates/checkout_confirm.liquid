@@ -1,0 +1,20 @@
+{%- comment -%}
+  レジ: 最終確認（特定商取引法の最終確認画面）。表示しなければならない項目と「注文を確定する」ボタンは
+  {% banto_confirmation %} が Banto の部品として描く（必須。無いと取り込めず、描かなければ既定のテーマに戻る）。
+  テーマはその外側（段階・見出し・要約）だけを作る
+{%- endcomment -%}
+<section class="checkout page-width page-width--narrow">
+  <nav class="checkout-steps" aria-label="{{ 'checkout.steps' | t }}">
+    <ol role="list">
+      <li><a href="{{ checkout.cart_url }}">{{ 'cart.title' | t }}</a></li>
+      <li>{{ 'checkout.address_title' | t }}</li>
+      <li aria-current="step">{{ 'checkout.confirm_title' | t }}</li>
+      <li>{{ 'checkout.payment' | t }}</li>
+    </ol>
+  </nav>
+  <h1>{{ 'checkout.confirm_title' | t }}</h1>
+  {%- comment %} 案内・項目・「注文を確定する」・お届け先の修正・カートへの戻りは Banto の部品の中にある {% endcomment %}
+  <div class="confirmation">
+    {% banto_confirmation %}
+  </div>
+</section>

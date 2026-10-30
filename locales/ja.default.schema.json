@@ -1,0 +1,125 @@
+{
+  "settings_schema": {
+    "colors": {
+      "name": "色",
+      "background": "背景",
+      "text": "文字",
+      "accent": "ボタン",
+      "accent_info": "ボタンとリンクの強調の色",
+      "accent_text": "ボタンの文字",
+      "border": "線"
+    },
+    "typography": {
+      "name": "文字",
+      "font_family": "書体",
+      "font_family_info": "端末に入っている書体を使います（外から読み込みません）",
+      "sans": "ゴシック",
+      "serif": "明朝",
+      "font_size_base": "本文の大きさ"
+    },
+    "layout": {
+      "name": "レイアウト",
+      "page_width": "ページの最大の幅"
+    },
+    "logo": {
+      "name": "ロゴ",
+      "image": "ロゴの画像",
+      "image_info": "テーマの assets/ に置いた画像から選びます。選ばなければショップ名を文字で出します",
+      "width": "ロゴの幅"
+    },
+    "cart": {
+      "name": "カート",
+      "ajax": "ページを移らずにカートに入れる",
+      "ajax_info": "オフにすると、カートに入れるたびにカートのページへ移ります"
+    }
+  },
+  "sections": {
+    "header_group": {
+      "name": "ヘッダー"
+    },
+    "footer_group": {
+      "name": "フッター"
+    },
+    "announcement_bar": {
+      "name": "お知らせの帯",
+      "text": "お知らせ",
+      "link": "リンク"
+    },
+    "header": {
+      "name": "ヘッダー",
+      "show_search": "検索を出す",
+      "show_account": "会員ページへのリンクを出す",
+      "show_account_info": "会員機能を使うショップだけオンにします"
+    },
+    "footer": {
+      "name": "フッター",
+      "text": "文章"
+    },
+    "image_banner": {
+      "name": "メイン画像",
+      "image": "画像",
+      "image_info": "テーマの assets/ に置いた画像から選びます",
+      "image_alt": "画像の説明（代わりの文字）",
+      "use_shop_name": "見出しが空ならショップ名と紹介文を出す",
+      "use_shop_name_info": "紹介文はショップの設定の「紹介文」",
+      "heading": "見出し",
+      "text": "文章",
+      "button_label": "ボタンの文字",
+      "button_link": "ボタンのリンク",
+      "height": "高さ",
+      "small": "低い",
+      "medium": "ふつう",
+      "large": "高い"
+    },
+    "rich_text": {
+      "name": "文章",
+      "align": "揃え",
+      "left": "左",
+      "center": "中央"
+    },
+    "featured_collection": {
+      "name": "おすすめの商品",
+      "heading": "見出し",
+      "products_to_show": "出す数"
+    },
+    "main_collection": {
+      "name": "商品の一覧",
+      "show_heading": "見出しを出す",
+      "heading": "見出し（トップ）",
+      "heading_info": "トップのときだけ。空ならショップ名",
+      "show_tags": "タグで絞り込むリンクを出す"
+    },
+    "main_product": {
+      "name": "商品"
+    },
+    "main_cart": {
+      "name": "カート"
+    },
+    "main_search": {
+      "name": "検索"
+    },
+    "main_page": {
+      "name": "ページ"
+    },
+    "main_404": {
+      "name": "見つからない"
+    }
+  },
+  "blocks": {
+    "text": {
+      "name": "文章",
+      "text": "文章",
+      "style": "見た目",
+      "heading": "見出し",
+      "body": "本文"
+    },
+    "button": {
+      "name": "ボタン",
+      "label": "文字",
+      "link": "リンク",
+      "style": "見た目",
+      "primary": "塗り",
+      "secondary": "線"
+    }
+  }
+}

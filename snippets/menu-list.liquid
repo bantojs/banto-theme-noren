@@ -1,0 +1,19 @@
+{%- comment -%}
+  メニューの一覧（入れ子は 2 段まで）。
+  - links: linklists['main-menu'].links
+  - class: ul に付けるクラス
+{%- endcomment -%}
+<ul class="{{ class }}" role="list">
+  {%- for link in links -%}
+    <li>
+      <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- if link.links.size > 0 -%}
+        <ul role="list">
+          {%- for child in link.links -%}
+            <li><a href="{{ child.url }}"{% if child.active %} aria-current="page"{% endif %}>{{ child.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </li>
+  {%- endfor -%}
+</ul>

@@ -1,0 +1,24 @@
+<footer class="site-footer">
+  <div class="page-width site-footer__inner">
+    {%- if section.settings.text != blank -%}
+      <div class="site-footer__text rte">{{ section.settings.text }}</div>
+    {%- endif -%}
+    <nav aria-label="{{ 'general.footer_menu' | t }}">
+      <ul class="site-footer__links" role="list">
+        {%- for link in linklists.footer.links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    <p class="site-footer__copy"><small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</small></p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "settings": [
+    { "type": "richtext", "id": "text", "label": "t:sections.footer.text" }
+  ]
+}
+{% endschema %}

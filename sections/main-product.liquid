@@ -1,0 +1,75 @@
+{%- comment -%}
+  商品のページ。SKU の選択は JS が無くても <select> で選べる。JS は値段・URL（?sku=）・SKU ごとの画像の並びを入れ替える
+  （画像の並びは Banto が ?sku= で決めるので、このセクションを ?sku=…&section_id=… で描き直して差し替える）。
+  在庫は「あるか」だけ（数は渡らない）
+{%- endcomment -%}
+{%- assign current = product.selected_or_first_available_variant -%}
+<section class="product page-width" data-noren-product data-section-id="{{ section.id }}" data-product-url="{{ product.url }}">
+  <div class="product__media" data-noren-media>
+    {%- if product.images.size > 0 -%}
+      <ul class="product__images" role="list">
+        {%- for image in product.images -%}
+          <li class="product__image">
+            {%- if forloop.first -%}
+              {%- render 'responsive-image', image: image, alt: product.title, sizes: '(min-width: 990px) 55vw, 100vw', loading: 'eager' -%}
+            {%- else -%}
+              {%- render 'responsive-image', image: image, alt: product.title, sizes: '(min-width: 990px) 55vw, 100vw' -%}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <span class="card__placeholder" aria-hidden="true"></span>
+    {%- endif -%}
+  </div>
+
+  <div class="product__info">
+    {%- if product.vendor != blank -%}<p class="product__vendor">{{ product.vendor }}</p>{%- endif -%}
+    <h1 class="product__title">{{ product.title }}</h1>
+    {%- render 'price', product: product, variant: current -%}
+
+    {%- form 'product', product, class: 'product-form', id: 'ProductForm' -%}
+      {%- if product.has_only_default_variant -%}
+        <input type="hidden" name="id" value="{{ current.id }}">
+      {%- else -%}
+        <div class="field">
+          <label for="Variant-{{ section.id }}">
+            {%- if product.options.size > 0 %}{{ product.options | join: ' / ' }}{% else %}{{ 'products.variant' | t }}{% endif -%}
+          </label>
+          <select id="Variant-{{ section.id }}" name="id" data-noren-variant>
+            {%- for variant in product.variants -%}
+              <option
+                value="{{ variant.id }}"
+                data-sku="{{ variant.sku }}"
+                data-price="{{ variant.price | money }}"
+                {%- if variant.compare_at_price and variant.compare_at_price > variant.price %} data-compare="{{ variant.compare_at_price | money }}"{% endif %}
+                {%- if variant.id == current.id %} selected{% endif %}
+                {%- unless variant.available %} disabled{% endunless -%}
+              >{{ variant.title }}{% unless variant.available %} — {{ 'products.sold_out' | t }}{% endunless %}</option>
+            {%- endfor -%}
+          </select>
+        </div>
+      {%- endif -%}
+      <div class="field field--quantity">
+        <label for="Quantity-{{ section.id }}">{{ 'products.quantity' | t }}</label>
+        <input id="Quantity-{{ section.id }}" type="number" name="quantity" value="1" min="1" max="99" inputmode="numeric">
+      </div>
+      {%- if current.available -%}
+        <button type="submit" class="button button--full" data-noren-add>{{ 'products.add_to_cart' | t }}</button>
+      {%- else -%}
+        <button type="submit" class="button button--full" data-noren-add disabled>{{ 'products.sold_out' | t }}</button>
+      {%- endif -%}
+    {%- endform -%}
+
+    {%- if product.description != blank -%}
+      <div class="product__description rte">{{ product.description }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_product.name",
+  "settings": []
+}
+{% endschema %}

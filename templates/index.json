@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "banner": {
+      "type": "image-banner",
+      "settings": {
+        "use_shop_name": true,
+        "height": "small"
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "show_heading": false,
+        "show_tags": false
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "main"
+  ]
+}

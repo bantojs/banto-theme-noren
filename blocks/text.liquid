@@ -1,0 +1,24 @@
+{%- assign plain = block.settings.text | strip_html | strip -%}
+{%- if plain != blank -%}
+  <div class="block-text block-text--{{ block.settings.style }} rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:blocks.text.name",
+  "settings": [
+    { "type": "richtext", "id": "text", "label": "t:blocks.text.text", "default": "<p></p>" },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:blocks.text.style",
+      "options": [
+        { "value": "heading", "label": "t:blocks.text.heading" },
+        { "value": "body", "label": "t:blocks.text.body" }
+      ],
+      "default": "body"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.text.name" }]
+}
+{% endschema %}

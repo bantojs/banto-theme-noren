@@ -1,0 +1,89 @@
+{%- comment -%}
+  レジ: 配送先。欄の名前は Banto のもの（docs/themes.md「レジ」）。送り先は {% form 'checkout_address' %} が決める（選んだ決済手段の確認）。
+  この画面は CSP で script-src 'self'（インラインのスクリプトは動かない）。JS が無くても送れる形にする
+{%- endcomment -%}
+{%- assign v = checkout.values -%}
+<section class="checkout page-width page-width--narrow">
+  <nav class="checkout-steps" aria-label="{{ 'checkout.steps' | t }}">
+    <ol role="list">
+      <li><a href="{{ checkout.cart_url }}">{{ 'cart.title' | t }}</a></li>
+      <li aria-current="step">{{ 'checkout.address_title' | t }}</li>
+      <li>{{ 'checkout.confirm_title' | t }}</li>
+      <li>{{ 'checkout.payment' | t }}</li>
+    </ol>
+  </nav>
+  <h1>{{ 'checkout.address_title' | t }}</h1>
+  <p class="checkout__summary">
+    {{ 'checkout.subtotal' | t }}: {{ checkout.subtotal_price | money }}
+    <span class="muted">（{{ checkout.shipping_summary }}{% if checkout.free_shipping_applied %} / {{ 'checkout.free_shipping_applied' | t }}{% endif %}）</span>
+  </p>
+  {%- if checkout.error -%}
+    <p class="notice notice--error" role="alert">{{ checkout.error }}</p>
+  {%- endif -%}
+
+  {%- form 'checkout_address', class: 'checkout-form' -%}
+    <fieldset>
+      <legend>{{ 'checkout.contact' | t }}</legend>
+      {%- render 'checkout-field', name: 'customer_name', label: 'checkout.name', value: v.customer_name, autocomplete: 'name', required: true -%}
+      {%- render 'checkout-field', name: 'customer_email', label: 'checkout.email', value: v.customer_email, type: 'email', autocomplete: 'email', required: true -%}
+      {%- render 'checkout-field', name: 'phone', label: 'checkout.phone', value: v.phone, type: 'tel', autocomplete: 'tel', required: true -%}
+    </fieldset>
+    <fieldset>
+      <legend>{{ 'checkout.address' | t }}</legend>
+      {%- render 'checkout-field', name: 'postal_code', label: 'checkout.postal_code', value: v.postal_code, autocomplete: 'postal-code', required: true, inputmode: 'numeric' -%}
+      <div class="field">
+        <label for="state">{{ 'checkout.state' | t }}</label>
+        <select id="state" name="state" required autocomplete="address-level1">
+          <option value="">{{ 'checkout.state_placeholder' | t }}</option>
+          {%- for pref in checkout.prefectures -%}
+            <option value="{{ pref.name }}"{% if v.state == pref.name %} selected{% endif %}>
+              {{- pref.name -}}
+              {%- if pref.shipping_price != nil %}（{{ 'checkout.shipping_fee' | t }} {{ pref.shipping_price | money }}）{% endif -%}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+      {%- render 'checkout-field', name: 'city', label: 'checkout.city', value: v.city, autocomplete: 'address-level2', required: true -%}
+      {%- render 'checkout-field', name: 'line1', label: 'checkout.line1', value: v.line1, autocomplete: 'address-line1', required: true -%}
+      {%- render 'checkout-field', name: 'line2', label: 'checkout.line2', value: v.line2, autocomplete: 'address-line2', required: false -%}
+    </fieldset>
+
+    {%- if checkout.delivery -%}
+      <fieldset>
+        <legend>{{ 'checkout.delivery' | t }}</legend>
+        <div class="field">
+          <label for="delivery_date">{{ 'checkout.delivery_date' | t }}</label>
+          <select id="delivery_date" name="delivery_date">
+            <option value="">{{ 'checkout.delivery_none' | t }}</option>
+            {%- for d in checkout.delivery.dates -%}
+              <option value="{{ d.value }}"{% if v.delivery_date == d.value %} selected{% endif %}>{{ d.label }}</option>
+            {%- endfor -%}
+          </select>
+        </div>
+        {%- if checkout.delivery.slots.size > 0 -%}
+          <div class="field">
+            <label for="delivery_slot">{{ 'checkout.delivery_slot' | t }}</label>
+            <select id="delivery_slot" name="delivery_slot">
+              <option value="">{{ 'checkout.delivery_none' | t }}</option>
+              {%- for slot in checkout.delivery.slots -%}
+                <option value="{{ slot.value }}"{% if v.delivery_slot == slot.value %} selected{% endif %}>{{ slot.label }}</option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+        <p class="muted">{{ checkout.delivery.note }}</p>
+      </fieldset>
+    {%- endif -%}
+
+    {%- if checkout.marketing_consent -%}
+      <p class="field field--checkbox">
+        <label><input type="checkbox" name="marketing_consent" value="1"{% if v.marketing_consent == '1' %} checked{% endif %}> {{ 'checkout.marketing_consent' | t }}</label>
+      </p>
+    {%- endif -%}
+
+    <div class="checkout__buttons">
+      <button type="submit" class="button">{{ 'checkout.to_confirm' | t }}</button>
+      <a href="{{ checkout.cart_url }}">{{ 'checkout.back_to_cart' | t }}</a>
+    </div>
+  {%- endform -%}
+</section>

@@ -1,0 +1,26 @@
+{%- comment -%}
+  購入の完了。checkout.status は confirmed / pending / released / not_found / unknown。
+  確定を待つあいだ（pending）は Banto が数秒ごとに読み込み直す。message は既定のテーマと同じ文言
+{%- endcomment -%}
+<section class="checkout-done page-width page-width--narrow">
+  {%- case checkout.status -%}
+    {%- when 'confirmed' -%}
+      <h1>{{ 'checkout.done_title' | t }}</h1>
+      {%- if checkout.order_number -%}
+        <p class="checkout-done__number">{{ 'checkout.order_number' | t }}: <strong>#{{ checkout.order_number }}</strong></p>
+      {%- endif -%}
+    {%- when 'pending' -%}
+      <h1>{{ 'checkout.pending_title' | t }}</h1>
+    {%- else -%}
+      <h1>{{ 'checkout.done_unknown_title' | t }}</h1>
+  {%- endcase -%}
+  {%- if checkout.message != blank -%}
+    <p role="status">{{ checkout.message }}</p>
+  {%- endif -%}
+  <p class="checkout-done__links">
+    <a class="button" href="{{ checkout.continue_url }}">{{ 'general.continue_shopping' | t }}</a>
+    {%- if checkout.inquiry_url -%}
+      <a class="button button--secondary" href="{{ checkout.inquiry_url }}">{{ 'checkout.contact_us' | t }}</a>
+    {%- endif -%}
+  </p>
+</section>
