@@ -65,7 +65,12 @@
     "shipping_later": "送料はお届け先を入れた後の確認画面に出ます。",
     "shipping_link": "送料について",
     "update": "数量を更新",
-    "checkout": "購入手続きへ"
+    "checkout": "購入手続きへ",
+    "coupon_title": "クーポン",
+    "coupon_code": "クーポンのコード",
+    "coupon_apply": "使う",
+    "coupon_remove": "外す",
+    "payment_method": "お支払いの方法"
   },
   "checkout": {
     "steps": "購入の手順",

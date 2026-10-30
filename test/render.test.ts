@@ -40,7 +40,7 @@ beforeAll(async () => {
   bundle = ((await buildBundle(DIR, "ja")) as { bundle: Bundle }).bundle;
 });
 
-async function setup() {
+async function setup(modules: Record<string, boolean> = {}) {
   forgetThemes();
   const sb = new FakeSupabase();
   sb.sitePlan = "paid";
@@ -53,7 +53,7 @@ async function setup() {
     privacy_policy: "個人情報の扱い",
     return_policy: "返品について",
     stripe_account_id: "acct_connected",
-    settings: { members_enabled: true, theme_settings: { description: "白と黒の見本のお店です。" } },
+    settings: { members_enabled: true, modules, theme_settings: { description: "白と黒の見本のお店です。" } },
   });
   const row = sb.tables.shops.find((x) => x["id"] === shop.id)!;
   row["domain"] = "shop.example.jp";
@@ -173,6 +173,10 @@ describe("すべてのページをテーマで描く", () => {
     expectNoren(cart, "cart");
     expect(cart).toContain('name="updates[]" value="2"');
     expect(cart).toContain("¥6,600");
+    // クーポンのモジュールが OFF なら欄を出さない。決済手段が 1 つなら選ぶ欄を出さない
+    expect(cart).not.toContain('class="coupon"');
+    expect(cart).not.toContain('name="provider"');
+    expect(cart).toContain('<button type="submit" name="checkout" class="button" form="CartForm">');
 
     // カートのフォームの「購入手続きへ」→ 配送先（テーマのレジ）
     const address = await b.post("/cart", { "updates[]": "2", checkout: "" });
@@ -206,6 +210,20 @@ describe("すべてのページをテーマで描く", () => {
 
     const done = await (await b.get("/checkout/done")).text();
     expectNoren(done, "checkout_done");
+  });
+
+  it("カートのクーポンの欄（モジュール coupons が ON のショップ）", async () => {
+    const { b, shop, skuS } = await setup({ coupons: true });
+    await preview(b, shop.id);
+    await b.post("/cart/add", { id: skuS.id, quantity: "1" });
+    expect((await b.post("/cart/coupon", { code: "NOPE" })).status).toBe(302);
+    const html = await (await b.get("/cart")).text();
+    expectNoren(html, "cart");
+    expect(html).toContain('<form class="search-inline" method="post" action="/cart/coupon">');
+    expect(html).toMatch(/coupon__code--rejected">\s*<p>\s*<strong>NOPE<\/strong> <span role="alert">\S/);
+    expect(html).toContain('name="remove" value="NOPE"');
+    await b.post("/cart/coupon", { remove: "NOPE" });
+    expect(await (await b.get("/cart")).text()).not.toContain("<strong>NOPE</strong>");
   });
 
   it("会員ページ（{% banto_account %} と CSP）", async () => {

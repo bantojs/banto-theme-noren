@@ -7,7 +7,7 @@ permissions:
 
 env:
   # 描いて確かめる Banto の版（対応する版を上げるときにここを変える。README の「対応する Banto の版」も）
-  BANTO_REF: v0.4.2
+  BANTO_REF: v0.4.3
 
 jobs:
   render:

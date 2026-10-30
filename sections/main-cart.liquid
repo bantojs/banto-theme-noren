@@ -1,6 +1,8 @@
 {%- comment -%}
   カート。数を変える・外すは JS が無くても動く（{% form 'cart' %} と item.url_to_remove）。
-  送料と送料無料のクーポンは、配送先が決まってから最終確認の画面で出る
+  送料と送料無料のクーポンは、配送先が決まってから最終確認の画面で出る。
+  フォームは入れ子にできないので、{% form 'cart' %} は数量の表だけを包み、決済手段の欄とボタンは form="CartForm" で結ぶ
+  （クーポンの欄はそれぞれ別のフォーム）
 {%- endcomment -%}
 {%- assign shop_root = routes.cart_url | remove_last: '/cart' -%}
 <section class="cart page-width">
@@ -14,7 +16,7 @@
     <p><a class="button button--secondary" href="{{ routes.root_url }}">{{ 'general.continue_shopping' | t }}</a></p>
   {%- else -%}
     {%- assign has_short = false -%}
-    {%- form 'cart', cart, class: 'cart-form' -%}
+    {%- form 'cart', cart, class: 'cart-form', id: 'CartForm' -%}
       <table class="cart-table">
         <caption class="visually-hidden">{{ 'cart.title' | t }}</caption>
         <thead>
@@ -51,22 +53,56 @@
           {%- endfor -%}
         </tbody>
       </table>
-
-      <div class="cart__footer">
-        <dl class="totals">
-          <div><dt>{{ 'cart.subtotal' | t }}</dt><dd>{{ cart.items_subtotal_price | money }}</dd></div>
-          {%- for discount in cart.cart_level_discount_applications -%}
-            <div><dt>{{ discount.title }}</dt><dd>-{{ discount.total_allocated_amount | money }}</dd></div>
-          {%- endfor -%}
-          <div class="totals__total"><dt>{{ 'cart.total' | t }}</dt><dd>{{ cart.total_price | money }}</dd></div>
-        </dl>
-        <p class="cart__note">{{ 'cart.tax_included' | t }} {{ 'cart.shipping_later' | t }} <a href="{{ shop_root }}/shipping">{{ 'cart.shipping_link' | t }}</a></p>
-        <div class="cart__buttons">
-          <button type="submit" name="update" class="button button--secondary">{{ 'cart.update' | t }}</button>
-          <button type="submit" name="checkout" class="button"{% if has_short %} disabled{% endif %}>{{ 'cart.checkout' | t }}</button>
-        </div>
-      </div>
     {%- endform -%}
+
+    <div class="cart__footer">
+      {%- if routes.cart_coupon_url -%}
+        <div class="coupon">
+          <h2 class="coupon__title">{{ 'cart.coupon_title' | t }}</h2>
+          {%- for code in cart.discount_codes -%}
+            <div class="coupon__code{% unless code.applicable %} coupon__code--rejected{% endunless %}">
+              <p>
+                <strong>{{ code.code }}</strong>
+                {%- unless code.applicable %} <span role="alert">{{ code.banto_message }}</span>{% endunless -%}
+              </p>
+              <form method="post" action="{{ routes.cart_coupon_url }}">
+                <input type="hidden" name="remove" value="{{ code.code }}">
+                <button type="submit" class="button button--secondary button--small">{{ 'cart.coupon_remove' | t }}<span class="visually-hidden">: {{ code.code }}</span></button>
+              </form>
+            </div>
+          {%- endfor -%}
+          <form class="search-inline" method="post" action="{{ routes.cart_coupon_url }}">
+            <label class="visually-hidden" for="CouponCode">{{ 'cart.coupon_code' | t }}</label>
+            <input id="CouponCode" type="text" name="code" maxlength="32" autocomplete="off" autocapitalize="characters" placeholder="{{ 'cart.coupon_code' | t }}">
+            <button type="submit" class="button button--secondary">{{ 'cart.coupon_apply' | t }}</button>
+          </form>
+        </div>
+      {%- endif -%}
+      <dl class="totals">
+        <div><dt>{{ 'cart.subtotal' | t }}</dt><dd>{{ cart.items_subtotal_price | money }}</dd></div>
+        {%- for discount in cart.cart_level_discount_applications -%}
+          <div><dt>{{ discount.title }}</dt><dd>-{{ discount.total_allocated_amount | money }}</dd></div>
+        {%- endfor -%}
+        <div class="totals__total"><dt>{{ 'cart.total' | t }}</dt><dd>{{ cart.total_price | money }}</dd></div>
+      </dl>
+      <p class="cart__note">{{ 'cart.tax_included' | t }} {{ 'cart.shipping_later' | t }} <a href="{{ shop_root }}/shipping">{{ 'cart.shipping_link' | t }}</a></p>
+      {%- comment %} 決済手段が 2 つ以上のときだけ選ばせる（1 つならその手段で進む。KOMOJU の中の支払い方法は KOMOJU のページで選ぶ） {% endcomment -%}
+      {%- if cart.banto_payment_methods.size > 1 -%}
+        <fieldset class="payment-methods">
+          <legend>{{ 'cart.payment_method' | t }}</legend>
+          {%- for method in cart.banto_payment_methods -%}
+            <label class="payment-methods__option">
+              <input type="radio" name="provider" value="{{ method.id }}" form="CartForm"{% if forloop.first %} checked{% endif %}>
+              {{ method.name }}
+            </label>
+          {%- endfor -%}
+        </fieldset>
+      {%- endif -%}
+      <div class="cart__buttons">
+        <button type="submit" name="update" class="button button--secondary" form="CartForm">{{ 'cart.update' | t }}</button>
+        <button type="submit" name="checkout" class="button" form="CartForm"{% if has_short %} disabled{% endif %}>{{ 'cart.checkout' | t }}</button>
+      </div>
+    </div>
     <p><a href="{{ routes.root_url }}">{{ 'general.continue_shopping' | t }}</a></p>
   {%- endif -%}
 </section>

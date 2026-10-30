@@ -65,7 +65,12 @@
     "shipping_later": "Shipping is shown on the review page after you enter your address.",
     "shipping_link": "About shipping",
     "update": "Update",
-    "checkout": "Check out"
+    "checkout": "Check out",
+    "coupon_title": "Coupon",
+    "coupon_code": "Coupon code",
+    "coupon_apply": "Apply",
+    "coupon_remove": "Remove",
+    "payment_method": "Payment method"
   },
   "checkout": {
     "steps": "Checkout steps",
