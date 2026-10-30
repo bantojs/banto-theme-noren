@@ -1292,3 +1292,22 @@ legend {
     transition: none !important;
   }
 }
+
+/* ---------- Banto のレイアウトのブロック（グループ・カラム・カバー・画像と文・ギャラリー・アコーディオン・スペーサー） ----------
+   並べ方は Banto が添える CSS。色と大きさだけを暖簾の設定から渡す（docs/pages.md「テーマで決まる値」） */
+:root {
+  --banto-bg-subtle: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
+  --banto-bg-accent: var(--color-accent);
+  --banto-fg-accent: var(--color-accent-text);
+  --banto-bg-dark: var(--color-text);
+  --banto-fg-dark: var(--color-bg);
+  --banto-line: var(--color-border);
+  --banto-radius: 0;
+  --banto-gap: 2rem;
+}
+.rte .banto-cover h2,
+.rte .banto-cover h3 { margin-top: 0; }
+.rte .banto-cover__inner h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+.rte .banto-accordion > summary { font-weight: 500; letter-spacing: .02em; }
+.rte .banto-gallery img,
+.rte .banto-media__fig img { border-radius: 0; }
