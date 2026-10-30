@@ -483,6 +483,88 @@ legend {
   margin-bottom: 0;
 }
 
+/* 本文（商品の説明・ショップのページ。Banto が決まった書式から作る HTML: 見出し h2〜h4・表・引用・画像・コード・区切り線） */
+.rte h2,
+.rte h3,
+.rte h4 {
+  margin: 2em 0 0.75em;
+}
+
+.rte h4 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.rte > :first-child {
+  margin-top: 0;
+}
+
+.rte ul,
+.rte ol {
+  padding-left: 1.5em;
+}
+
+.rte li + li {
+  margin-top: 0.25em;
+}
+
+.rte img {
+  display: block;
+  margin: 1.5em 0;
+}
+
+.rte blockquote {
+  margin: 1.5em 0;
+  padding: 0.25em 0 0.25em 1em;
+  border-left: 3px solid var(--color-border);
+}
+
+.rte blockquote p {
+  margin: 0.5em 0;
+}
+
+.rte hr {
+  margin: 2.5em 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.rte code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+/* 表は狭い画面で横に送る（Banto が .banto-table で包む） */
+.rte .banto-table {
+  margin: 1.5em 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rte table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.rte th,
+.rte td {
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--color-border);
+  min-width: 5em;
+  overflow-wrap: normal;
+  text-align: left;
+  vertical-align: top;
+}
+
+.rte th {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* ---------- 一覧・カード ---------- */
 .collection,
 .featured,
