@@ -1,0 +1,26 @@
+{%- comment -%}
+  ショップのページ・記事の「記事を並べる」ブロック（Banto の同梱モジュール blog。本文の ::: articles の場所に入る）。
+  選ぶのは Banto、描くのはここ。
+  - articles: 並べる記事（新しい順。数・タグは Banto が当てたもの）
+  - blog: ブログ（title・url）
+  - block: ブロックの設定（layout: grid / list、limit、tag、style、index）
+{%- endcomment -%}
+{%- if articles.size > 0 -%}
+  <ul class="article-list page-articles{% if block.layout == 'list' %} page-articles--list{% endif %}" role="list">
+    {%- for article in articles -%}
+      <li class="article-card">
+        <a class="article-card__link" href="{{ article.url }}">
+          {%- if article.image -%}
+            <div class="article-card__media"><img src="{{ article.image.src }}" alt="" loading="lazy" decoding="async"></div>
+          {%- endif -%}
+          <div class="article-card__body">
+            <p class="article-card__date"><time datetime="{{ article.published_at }}">{{ article.published_at | date: '%Y.%m.%d' }}</time></p>
+            <h3 class="article-card__title">{{ article.title }}</h3>
+            {%- if article.excerpt != blank -%}<p class="article-card__excerpt">{{ article.excerpt }}</p>{%- endif -%}
+          </div>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+  <p class="page-articles__more"><a href="{{ blog.url }}">{{ 'blogs.see_all' | t }}</a></p>
+{%- endif -%}

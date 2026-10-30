@@ -14,7 +14,7 @@
  */
 import { beforeAll, describe, expect, it } from "vitest";
 import { resolve } from "node:path";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { FakeSupabase } from "./fake-supabase";
 import { FakeStripe } from "./fake-stripe";
 import { ADDRESS, BASE, Browser, MemoryStorage, appWith, memberLogin, memberMail, quoteFrom } from "./helpers";
@@ -283,6 +283,26 @@ describe("すべてのページをテーマで描く", () => {
     expect(art).toContain('<h1 class="article__title">記事 2</h1>');
     expect(art).toContain("<p>本文 2</p>");
     expect(art).toContain('href="/blogs/news?tag=%E6%96%B0%E4%BD%9C"');
+  });
+
+  // 記事を並べるブロック・ブロックのスタイル・パターン（Banto の main、v0.4.3 の後）。その Banto でなければ飛ばす
+  it.skipIf(!existsSync(resolve("src/content/theme-blocks.ts")))("記事を並べるブロック（snippets/page-articles）とブロックのスタイル", async () => {
+    const { sb, shop, b } = await setup({ pages: true, blog: true });
+    const blog = sb.addBlog(shop.id, { handle: "news", title: "お知らせ" });
+    for (let i = 1; i <= 3; i++) sb.addArticle(shop.id, blog.id, { handle: `post-${i}`, title: `記事 ${i}`, body: `本文 ${i}`, published_at: new Date(Date.UTC(2026, 9, i)).toISOString() });
+    sb.addPage(shop.id, { handle: "top", title: "トップ", body: "::: group style=framed pad=s\nお知らせ\n:::\n\n::: articles blog=news limit=2 layout=list style=plain\n\n::: button style=outline [見る](/search)" });
+    const html = await (await b.get("/pages/top")).text();
+    expect(html).toContain('<ul class="article-list page-articles page-articles--list" role="list">');
+    expect(html).toContain('<a class="article-card__link" href="/blogs/news/post-3">');
+    expect(html).not.toContain("post-1");
+    expect(html).toContain('href="/blogs/news">');
+    expect(html).toContain("banto-group banto-bg-none banto-pad-s banto-style-framed");
+    expect(html).toContain('class="banto-button banto-style-outline"');
+    expect(html).not.toContain("banto-articles__list");
+    // パターンとスタイルの宣言は Banto の検査を通る
+    const { checkThemeEditorFiles } = await import(resolve("src/content/theme-blocks.ts"));
+    const files = Object.fromEntries(["config/banto_patterns.json", "config/banto_block_styles.json"].map((f) => [f, readFileSync(resolve(DIR, f), "utf8")]));
+    expect(checkThemeEditorFiles(files)).toEqual([]);
   });
 
   it("公開中の版として描く（プレビューでなくても既定のテーマに戻らない）", async () => {

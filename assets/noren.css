@@ -1311,3 +1311,17 @@ legend {
 .rte .banto-accordion > summary { font-weight: 500; letter-spacing: .02em; }
 .rte .banto-gallery img,
 .rte .banto-media__fig img { border-radius: 0; }
+
+/* ---------- 暖簾のブロックのスタイル（config/banto_block_styles.json）と、記事を並べるブロック ---------- */
+.banto-group.banto-style-framed { background: transparent; border: 1px solid var(--color-text); border-radius: 0; }
+.banto-group.banto-style-quiet { padding: clamp(2.5rem, 8vw, 6rem) clamp(1rem, 6vw, 4rem); }
+.banto-button.banto-style-outline .banto-button__link { background: transparent; color: inherit; border: 1px solid currentColor; }
+.banto-button.banto-style-outline .banto-button__link:hover { background: currentColor; }
+.banto-button.banto-style-outline .banto-button__link:hover { color: var(--color-bg); }
+.banto-cover .banto-button.banto-style-outline .banto-button__link:hover { color: var(--color-text); background: var(--color-bg); }
+.banto-button.banto-style-text .banto-button__link { background: transparent; color: inherit; border: 0; padding: 0; text-decoration: underline; text-underline-offset: .3em; }
+.banto-cover.banto-style-edge { border-radius: 0; }
+.banto-articles.banto-style-plain .article-card__media { display: none; }
+.page-articles { margin: 1.5rem 0 .5rem; }
+.page-articles--list { grid-template-columns: 1fr; }
+.page-articles__more { margin: 0 0 1.5rem; text-align: right; font-size: .9rem; }
