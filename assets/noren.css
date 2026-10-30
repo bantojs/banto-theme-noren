@@ -605,6 +605,51 @@ legend {
   padding: 0;
 }
 
+/* 横スクロールの列（ショップのページの「商品を並べる」で layout: scroll） */
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(15rem, 70%);
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0.75rem;
+}
+
+.rail > * {
+  scroll-snap-align: start;
+}
+
+.page-products {
+  margin: 2rem 0;
+}
+
+/* ショップのページの「ボタン」ブロック（::: button） */
+.banto-button {
+  margin: 1.75rem 0;
+}
+
+.rte .banto-button__link,
+.banto-button__link {
+  display: inline-block;
+  min-width: 12rem;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+}
+
+.rte .banto-button__link:hover,
+.banto-button__link:hover {
+  opacity: 0.85;
+}
+
 .card__link {
   display: block;
   text-decoration: none;

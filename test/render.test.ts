@@ -14,6 +14,7 @@
  */
 import { beforeAll, describe, expect, it } from "vitest";
 import { resolve } from "node:path";
+import { existsSync } from "node:fs";
 import { FakeSupabase } from "./fake-supabase";
 import { FakeStripe } from "./fake-stripe";
 import { ADDRESS, BASE, Browser, MemoryStorage, appWith, memberLogin, memberMail, quoteFrom } from "./helpers";
@@ -253,6 +254,18 @@ describe("すべてのページをテーマで描く", () => {
     expect(html.match(/class="card"/g)?.length).toBe(48);
     expect(html).toContain('rel="next"');
     console.log(`[noren] index with 48 products: ${ms.toFixed(1)} ms (whole request, test doubles included)`);
+  });
+
+  // ショップのページの「商品を並べる」「ボタン」（Banto の main、v0.4.3 の後）。その Banto でなければ飛ばす
+  it.skipIf(!existsSync(resolve("src/pages/blocks.ts")))("ショップのページの商品のブロック（snippets/page-products）とボタン", async () => {
+    const { sb, shop, b } = await setup({ pages: true });
+    sb.addPage(shop.id, { handle: "picks", title: "おすすめ", body: "定番です。\n\n::: products category=tops limit=4 layout=scroll\n\n::: products limit=2\n\n::: button [すべて見る](/search)" });
+    const html = await (await b.get("/pages/picks")).text();
+    expect(html).toContain('<ul class="rail page-products" role="list">');
+    expect(html).toContain('<ul class="grid page-products" role="list">');
+    expect(html).toContain('href="/p/tee"');
+    expect(html).toContain('<a class="banto-button__link" href="/search">すべて見る</a>');
+    expect(html).not.toContain("banto-products__list");
   });
 
   it("公開中の版として描く（プレビューでなくても既定のテーマに戻らない）", async () => {
