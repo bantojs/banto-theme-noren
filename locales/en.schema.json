@@ -103,6 +103,25 @@
     },
     "main_404": {
       "name": "Not found"
+    },
+    "main_blog": {
+      "name": "Blog articles",
+      "settings": {
+        "show_image": {
+          "label": "Show featured images"
+        },
+        "show_tags": {
+          "label": "Show tag filter"
+        }
+      }
+    },
+    "main_article": {
+      "name": "Blog article",
+      "settings": {
+        "show_image": {
+          "label": "Show featured image"
+        }
+      }
     }
   },
   "blocks": {

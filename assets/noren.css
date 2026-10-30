@@ -605,6 +605,109 @@ legend {
   padding: 0;
 }
 
+/* ---------- ブログ（Banto の同梱モジュール blog） ---------- */
+.blog,
+.article {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.blog__header {
+  margin-bottom: 1.5rem;
+}
+
+.blog__description {
+  margin: 0.5rem 0 0;
+}
+
+.article-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.article-card {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.article-card__link {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  text-decoration: none;
+}
+
+.article-card__media img,
+.article__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.article-card__media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-text) 4%, var(--color-bg));
+}
+
+.article-card__media img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-card__date,
+.article__meta,
+.blog__feed {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--color-text) 65%, var(--color-bg));
+}
+
+.article-card__title {
+  margin: 0.25rem 0;
+  font-size: 1.25rem;
+}
+
+.article-card__excerpt {
+  margin: 0;
+}
+
+.article__title {
+  margin: 0.5rem 0 1.5rem;
+}
+
+.article__media {
+  margin: 0 0 2rem;
+}
+
+.article__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+
+.article__back {
+  margin: 2.5rem 0 0;
+}
+
+.blog__feed {
+  margin-top: 2rem;
+}
+
+@media (min-width: 750px) {
+  .article-card__link {
+    grid-template-columns: 14rem 1fr;
+    align-items: start;
+  }
+
+  .article-card__link > :only-child {
+    grid-column: 1 / -1;
+  }
+}
+
 /* 横スクロールの列（ショップのページの「商品を並べる」で layout: scroll） */
 .rail {
   display: grid;

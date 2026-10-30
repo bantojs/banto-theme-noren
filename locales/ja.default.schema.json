@@ -103,6 +103,25 @@
     },
     "main_404": {
       "name": "見つからない"
+    },
+    "main_blog": {
+      "name": "ブログの記事の一覧",
+      "settings": {
+        "show_image": {
+          "label": "アイキャッチ画像を出す"
+        },
+        "show_tags": {
+          "label": "タグで絞る欄を出す"
+        }
+      }
+    },
+    "main_article": {
+      "name": "ブログの記事",
+      "settings": {
+        "show_image": {
+          "label": "アイキャッチ画像を出す"
+        }
+      }
     }
   },
   "blocks": {

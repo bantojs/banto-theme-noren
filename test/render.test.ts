@@ -268,6 +268,23 @@ describe("すべてのページをテーマで描く", () => {
     expect(html).not.toContain("banto-products__list");
   });
 
+  // ブログ（Banto の同梱モジュール blog、v0.4.3 の後）。その Banto でなければ飛ばす
+  it.skipIf(!existsSync(resolve("src/blog/index.ts")))("ブログの記事の一覧と記事（templates/blog・article）", async () => {
+    const { sb, shop, b } = await setup({ blog: true });
+    const blog = sb.addBlog(shop.id, { handle: "news", title: "お知らせ", description: "見本のお知らせ", nav: "header" });
+    for (let i = 1; i <= 13; i++) sb.addArticle(shop.id, blog.id, { handle: `post-${i}`, title: `記事 ${i}`, body: `本文 ${i}`, tags: ["新作"], image_url: i === 13 ? "/media/p/tee-w.webp" : null, published_at: new Date(Date.UTC(2026, 9, i)).toISOString() });
+    const list = await (await b.get("/blogs/news")).text();
+    expect(list).toContain('<h1 class="blog__title">お知らせ</h1>');
+    expect(list).toContain('<a class="article-card__link" href="/blogs/news/post-13">');
+    expect(list).toContain("2026.10.13");
+    expect(list).toContain('href="/blogs/news?page=2"');
+    expect(list).toContain('href="/blogs/news"');
+    const art = await (await b.get("/blogs/news/post-2")).text();
+    expect(art).toContain('<h1 class="article__title">記事 2</h1>');
+    expect(art).toContain("<p>本文 2</p>");
+    expect(art).toContain('href="/blogs/news?tag=%E6%96%B0%E4%BD%9C"');
+  });
+
   it("公開中の版として描く（プレビューでなくても既定のテーマに戻らない）", async () => {
     const { b } = await setup();
     const html = await (await b.get("/p/tee")).text();

@@ -118,5 +118,11 @@
   "not_found": {
     "title": "Page not found",
     "text": "The page you were looking for may have moved or no longer exists."
+  },
+  "blogs": {
+    "filter_by_tag": "Filter by tag",
+    "all": "All",
+    "empty": "No articles yet.",
+    "back": "Back to {{ title }}"
   }
 }
