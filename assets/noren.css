@@ -907,6 +907,38 @@ legend {
   margin-top: 2rem;
 }
 
+/* 明細の表: 金額と数量は折らずに右へそろえ、狭い画面では商品名の列が折れる（body の overflow-wrap: anywhere で金額が途中で折れないように） */
+.banto-confirmation table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.banto-confirmation th,
+.banto-confirmation td {
+  padding: 0.625rem 0.375rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.banto-confirmation thead th {
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.banto-confirmation th:not(:first-child),
+.banto-confirmation td:not(:first-child) {
+  text-align: right;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.banto-confirmation tfoot tr:last-child > * {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 .banto-confirmation pre.legal {
   font: inherit;
   white-space: pre-wrap;
