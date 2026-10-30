@@ -73,7 +73,7 @@ node banto-theme.mjs push . --publish        # 取り込んで公開する（the
 | `locales/` | 日本語（既定）と英語。設定の画面の文言は `*.schema.json` |
 | `assets/` | `noren.css` と `noren.js` の 2 つだけ |
 
-名前（テンプレート・セクション・フィルター・オブジェクト・タグ）は、Shopify のテーマを書いたことのある人がそのまま書けるように Banto が合わせたものです。このテーマは一から書いたもので、Shopify のテーマのコードは含みません。
+名前（テンプレート・セクション・フィルター・オブジェクト・タグ）は、Shopify のテーマを書いたことのある人がそのまま書けるように Banto が合わせたものです。このテーマは一から書いたもので、Shopify のテーマのコードは含みません。Shopify は Shopify Inc. の商標です。このテーマと Banto は Shopify Inc. と関係ありません。
 
 ## 決まりごと（Banto のテーマとして）
 
