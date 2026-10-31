@@ -14,7 +14,7 @@
  */
 import { beforeAll, describe, expect, it } from "vitest";
 import { resolve } from "node:path";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { FakeSupabase } from "./fake-supabase";
 import { FakeStripe } from "./fake-stripe";
 import { ADDRESS, BASE, Browser, MemoryStorage, appWith, memberLogin, memberMail, quoteFrom } from "./helpers";
@@ -256,8 +256,8 @@ describe("すべてのページをテーマで描く", () => {
     console.log(`[noren] index with 48 products: ${ms.toFixed(1)} ms (whole request, test doubles included)`);
   });
 
-  // ショップのページの「商品を並べる」「ボタン」（Banto の main、v0.4.3 の後）。その Banto でなければ飛ばす
-  it.skipIf(!existsSync(resolve("src/pages/blocks.ts")))("ショップのページの商品のブロック（snippets/page-products）とボタン", async () => {
+  // ショップのページの「商品を並べる」「ボタン」（Banto v0.5.0 から）
+  it("ショップのページの商品のブロック（snippets/page-products）とボタン", async () => {
     const { sb, shop, b } = await setup({ pages: true });
     sb.addPage(shop.id, { handle: "picks", title: "おすすめ", body: "定番です。\n\n::: products category=tops limit=4 layout=scroll\n\n::: products limit=2\n\n::: button [すべて見る](/search)" });
     const html = await (await b.get("/pages/picks")).text();
@@ -268,8 +268,8 @@ describe("すべてのページをテーマで描く", () => {
     expect(html).not.toContain("banto-products__list");
   });
 
-  // ブログ（Banto の同梱モジュール blog、v0.4.3 の後）。その Banto でなければ飛ばす
-  it.skipIf(!existsSync(resolve("src/blog/index.ts")))("ブログの記事の一覧と記事（templates/blog・article）", async () => {
+  // ブログ（Banto の同梱モジュール blog、v0.5.0 から）
+  it("ブログの記事の一覧と記事（templates/blog・article）", async () => {
     const { sb, shop, b } = await setup({ blog: true });
     const blog = sb.addBlog(shop.id, { handle: "news", title: "お知らせ", description: "見本のお知らせ", nav: "header" });
     for (let i = 1; i <= 13; i++) sb.addArticle(shop.id, blog.id, { handle: `post-${i}`, title: `記事 ${i}`, body: `本文 ${i}`, tags: ["新作"], image_url: i === 13 ? "/media/p/tee-w.webp" : null, published_at: new Date(Date.UTC(2026, 9, i)).toISOString() });
@@ -285,8 +285,8 @@ describe("すべてのページをテーマで描く", () => {
     expect(art).toContain('href="/blogs/news?tag=%E6%96%B0%E4%BD%9C"');
   });
 
-  // 記事を並べるブロック・ブロックのスタイル・パターン（Banto の main、v0.4.3 の後）。その Banto でなければ飛ばす
-  it.skipIf(!existsSync(resolve("src/content/theme-blocks.ts")))("記事を並べるブロック（snippets/page-articles）とブロックのスタイル", async () => {
+  // 記事を並べるブロック・ブロックのスタイル・パターン（Banto v0.5.0 から）
+  it("記事を並べるブロック（snippets/page-articles）とブロックのスタイル", async () => {
     const { sb, shop, b } = await setup({ pages: true, blog: true });
     const blog = sb.addBlog(shop.id, { handle: "news", title: "お知らせ" });
     for (let i = 1; i <= 3; i++) sb.addArticle(shop.id, blog.id, { handle: `post-${i}`, title: `記事 ${i}`, body: `本文 ${i}`, published_at: new Date(Date.UTC(2026, 9, i)).toISOString() });

@@ -17,7 +17,7 @@ Banto の Liquid のテーマが描かれる条件と同じです（Banto の [d
 
 | 条件 | |
 | --- | --- |
-| Banto の版 | **v0.4.3 以上**を勧めます（CI はこの版で全ページを描いて確かめています）。v0.4.2 でも描けますが、カートのクーポンの欄と決済手段の選択は出ません |
+| Banto の版 | **v0.5.0 以上**（CI はこの版で全ページを描いて確かめています）。v0.4.3 でも描けますが、ショップのページ・ブログ・パターンとブロックのスタイル・記事を並べるブロックは出ません |
 | 動かす場所 | Cloudflare Workers の **有料プラン**（サイトの設定「Workers のプラン」）か Node。無料プランでは既定のテーマのままです |
 | ショップ | **独自ドメイン**があること。独自ドメインの無いショップは既定のテーマのままです |
 | 権限 | 取り込み・公開は、項目「デザイン（テーマ）」を持つ人か、AI 用トークンの `theme:write` / `theme:publish` |
@@ -37,7 +37,7 @@ Banto の Liquid のテーマが描かれる条件と同じです（Banto の [d
 Banto と同じ版の `cli/banto-theme.mjs` を使います（Node 20 以上、依存なし）。
 
 ```bash
-curl -fsSLo banto-theme.mjs https://raw.githubusercontent.com/bantojs/banto/v0.4.3/cli/banto-theme.mjs
+curl -fsSLo banto-theme.mjs https://raw.githubusercontent.com/bantojs/banto/v0.5.0/cli/banto-theme.mjs
 export BANTO_URL=https://banto.example.com   # 管理画面を開く URL
 export BANTO_TOKEN=banto_...                 # AI 連携で発行した theme:write のトークン
 node banto-theme.mjs push .                  # 新しい版として取り込み、プレビューのリンクを出す
@@ -90,7 +90,7 @@ node banto-theme.mjs push . --publish        # 取り込んで公開する（the
 CI（`.github/workflows/ci.yml`）は、Banto を決めた版で取ってきて、Banto のテストの道具でこのテーマの全ページを描きます（取り込みの検査・テンプレートの誤りが無いこと・カートのクーポンの欄・最終確認の部品・レジの CSP・決済ページまで進めること）。手元では:
 
 ```bash
-git clone https://github.com/bantojs/banto ../banto && (cd ../banto && git checkout v0.4.3 && npm ci)
+git clone https://github.com/bantojs/banto ../banto && (cd ../banto && git checkout v0.5.0 && npm ci)
 cp test/render.test.ts ../banto/test/noren-render.test.ts
 (cd ../banto && NOREN_DIR=../banto-theme-noren npx vitest run test/noren-render.test.ts)
 ```
