@@ -1,0 +1,129 @@
+{
+  "general": {
+    "skip_to_content": "本文へ移動",
+    "menu": "メニュー",
+    "footer_menu": "ご案内",
+    "search": "検索",
+    "search_placeholder": "商品を探す（3 文字以上）",
+    "account": "会員ページ",
+    "login": "ログイン",
+    "cart": "カート",
+    "cart_count": {
+      "zero": "カートは空です",
+      "one": "カートに {{ count }} 点",
+      "other": "カートに {{ count }} 点"
+    },
+    "continue_shopping": "買い物を続ける",
+    "pagination": "ページ送り",
+    "previous": "前へ",
+    "next": "次へ",
+    "added_to_cart": "カートに入れました",
+    "add_failed": "カートに入れられませんでした。もう一度お試しください"
+  },
+  "products": {
+    "add_to_cart": "カートに入れる",
+    "sold_out": "在庫切れ",
+    "unavailable": "販売していません",
+    "quantity": "数量",
+    "variant": "種類",
+    "regular_price": "通常価格",
+    "sale_price": "セール価格",
+    "tax_included": "（税込）",
+    "price_from": "{{ price }}〜"
+  },
+  "collections": {
+    "all": "すべて",
+    "count": {
+      "one": "{{ count }} 点",
+      "other": "{{ count }} 点"
+    },
+    "empty": "商品はまだありません。",
+    "filter_by_tag": "タグで絞り込む"
+  },
+  "search": {
+    "title": "検索",
+    "results_count": {
+      "zero": "「{{ terms }}」に合う商品はありませんでした",
+      "one": "「{{ terms }}」の検索結果 {{ count }} 件",
+      "other": "「{{ terms }}」の検索結果 {{ count }} 件"
+    },
+    "no_results": "別のことばでお試しください。",
+    "too_short": "3 文字以上で探してください。"
+  },
+  "cart": {
+    "title": "カート",
+    "empty": "カートは空です。",
+    "product": "商品",
+    "quantity": "数量",
+    "quantity_for": "{{ title }} の数量",
+    "line_total": "小計",
+    "remove": "外す",
+    "short": "在庫が足りません。数を減らすか外してください。",
+    "subtotal": "商品の小計",
+    "total": "合計",
+    "tax_included": "価格はすべて税込です。",
+    "shipping_later": "送料はお届け先を入れた後の確認画面に出ます。",
+    "shipping_link": "送料について",
+    "update": "数量を更新",
+    "checkout": "購入手続きへ",
+    "coupon_title": "クーポン",
+    "coupon_code": "クーポンのコード",
+    "coupon_apply": "使う",
+    "coupon_remove": "外す",
+    "payment_method": "お支払いの方法"
+  },
+  "checkout": {
+    "steps": "購入の手順",
+    "payment": "お支払い",
+    "address_title": "お届け先",
+    "confirm_title": "ご注文内容の確認",
+    "subtotal": "商品の小計",
+    "free_shipping_applied": "送料無料",
+    "contact": "ご連絡先",
+    "address": "ご住所",
+    "name": "お名前",
+    "email": "メールアドレス",
+    "phone": "電話番号",
+    "postal_code": "郵便番号",
+    "state": "都道府県",
+    "state_placeholder": "選んでください",
+    "city": "市区町村",
+    "line1": "番地",
+    "line2": "建物名・部屋番号",
+    "required": "必須",
+    "optional": "任意",
+    "shipping_fee": "送料",
+    "delivery": "お届け日時",
+    "delivery_date": "お届け日",
+    "delivery_slot": "時間帯",
+    "delivery_none": "指定しない",
+    "marketing_consent": "お店からのお知らせをメールで受け取る",
+    "to_confirm": "確認画面へ進む",
+    "back_to_cart": "カートに戻る",
+    "done_title": "ご注文ありがとうございました",
+    "pending_title": "お支払いを確かめています",
+    "done_unknown_title": "ご注文について",
+    "order_number": "注文番号",
+    "contact_us": "お問い合わせ"
+  },
+  "customer": {
+    "account_title": "会員ページ",
+    "orders": "ご注文の履歴",
+    "order": "注文",
+    "date": "日付",
+    "status": "状態",
+    "total": "合計",
+    "no_orders": "まだご注文はありません。"
+  },
+  "not_found": {
+    "title": "ページが見つかりません",
+    "text": "お探しのページは移動したか、なくなった可能性があります。"
+  },
+  "blogs": {
+    "filter_by_tag": "タグで絞る",
+    "all": "すべて",
+    "empty": "記事はまだありません。",
+    "back": "{{ title }}の一覧へ",
+    "see_all": "すべての記事を見る"
+  }
+}

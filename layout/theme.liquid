@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }}{% unless page_title == shop.name %} | {{ shop.name }}{% endunless %}</title>
+    {%- if page_description != blank %}
+      <meta name="description" content="{{ page_description | strip_newlines | truncate: 160 }}">
+    {%- endif %}
+    <meta property="og:site_name" content="{{ shop.name }}">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    {%- if product.featured_image %}
+      <meta property="og:type" content="product">
+      <meta property="og:image" content="{{ product.featured_image | image_url }}">
+    {%- else %}
+      <meta property="og:type" content="website">
+    {%- endif %}
+    {%- liquid
+      if settings.font_family == 'serif'
+        assign font_stack = '"Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Noto Serif CJK JP", serif'
+      else
+        assign font_stack = 'system-ui, -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic UI", Meiryo, sans-serif'
+      endif
+    -%}
+    {% style %}
+      :root {
+        --color-bg: {{ settings.color_background }};
+        --color-text: {{ settings.color_text }};
+        --color-accent: {{ settings.color_accent }};
+        --color-accent-text: {{ settings.color_accent_text }};
+        --color-border: {{ settings.color_border }};
+        {%- comment %} 出力は既定でエスケープされ、<style> の中では &quot; が戻らない。テーマの中の決まった文字列なので raw で出す {% endcomment %}
+        --font-body: {{ font_stack | raw }};
+        --font-size-base: {{ settings.font_size_base }}px;
+        --page-width: {{ settings.page_width }}px;
+        --logo-width: {{ settings.logo_width }}px;
+      }
+    {% endstyle %}
+    {{ 'noren.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      スクリプトはテーマの資産だけ（インラインに書かない）。レジの画面は CSP で script-src 'self' のため。
+      JS が無くても買えるように、JS は上乗せだけをする
+    {%- endcomment -%}
+    <script src="{{ 'noren.js' | asset_url }}" defer></script>
+    {{ content_for_header }}
+  </head>
+  <body
+    class="noren template-{{ template.name | replace: '/', '-' }}"
+    {%- if settings.cart_ajax %} data-noren-ajax-cart{% endif %}
+    data-cart-add-url="{{ routes.cart_add_url }}"
+    data-msg-added="{{ 'general.added_to_cart' | t }}"
+    data-msg-add-failed="{{ 'general.add_failed' | t }}"
+  >
+    <a class="skip-link" href="#MainContent">{{ 'general.skip_to_content' | t }}</a>
+    {% sections 'header-group' %}
+    <main id="MainContent" class="noren-main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+    {% sections 'footer-group' %}
+    <p class="noren-status" role="status" aria-live="polite" data-noren-status hidden></p>
+  </body>
+</html>

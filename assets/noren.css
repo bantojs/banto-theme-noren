@@ -1,0 +1,1327 @@
+/*
+ * 暖簾（noren）の CSS。白×黒の無地の素体（色・文字の大きさ・幅はテーマの設定から --color-* などで渡る）。
+ * スマホを先に書き、広い画面で足す。外のフォント・画像は読まない
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  font-feature-settings: "palt" 0;
+  overflow-wrap: anywhere;
+  line-break: strict;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.noren-main {
+  flex: 1;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  margin: 0 0 0.75em;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+th {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 10;
+  background: var(--color-bg);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-text);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.page-width {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding-inline: 1.25rem;
+}
+
+.page-width--narrow {
+  max-width: 44rem;
+}
+
+.muted,
+.price__tax,
+.card__vendor,
+.product__vendor,
+.cart-item__variant {
+  color: color-mix(in srgb, var(--color-text) 65%, var(--color-bg));
+  font-size: 0.875rem;
+}
+
+.empty {
+  padding: 2rem 0;
+}
+
+/* ---------- ボタン・入力 ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.button--secondary {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+.button--small {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.75rem;
+  font-weight: normal;
+  font-size: 0.875rem;
+}
+
+.button--full {
+  width: 100%;
+}
+
+.button:disabled,
+.button[aria-busy="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="number"],
+select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-text);
+  border-radius: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.field {
+  margin: 0 0 1rem;
+}
+
+.field label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.field--checkbox label {
+  font-weight: normal;
+}
+
+.field__required,
+.field__optional {
+  font-weight: normal;
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+}
+
+.field--quantity input {
+  max-width: 6rem;
+}
+
+fieldset {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 0 0 1.5rem;
+  padding: 1.25rem 0 0;
+}
+
+legend {
+  font-weight: 600;
+  padding: 0 0.5rem 0 0;
+}
+
+.notice {
+  border: 1px solid var(--color-text);
+  padding: 0.75rem 1rem;
+}
+
+.notice--error {
+  border-width: 2px;
+  font-weight: 600;
+}
+
+.search-inline {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+}
+
+.search-inline .button {
+  flex: none;
+}
+
+/* ---------- お知らせ・ヘッダー ---------- */
+.announcement {
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.announcement p,
+.announcement a {
+  display: block;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 4rem;
+}
+
+.site-header__logo {
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.site-header__name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.site-header__logo-image {
+  width: var(--logo-width);
+}
+
+.site-header__icons {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.site-header__icons a {
+  text-decoration: none;
+}
+
+.cart-count {
+  display: inline-block;
+  min-width: 1.5em;
+  margin-left: 0.25em;
+  padding: 0 0.35em;
+  border: 1px solid currentColor;
+  border-radius: 1em;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.site-nav {
+  display: none;
+}
+
+.menu-drawer > summary {
+  list-style: none;
+  cursor: pointer;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-drawer > summary::-webkit-details-marker {
+  display: none;
+}
+
+.menu-drawer__bars,
+.menu-drawer__bars::before,
+.menu-drawer__bars::after {
+  display: block;
+  width: 1.25rem;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+}
+
+.menu-drawer__bars::before,
+.menu-drawer__bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.menu-drawer__bars::before {
+  top: -6px;
+}
+
+.menu-drawer__bars::after {
+  top: 6px;
+}
+
+.menu-drawer[open] .menu-drawer__bars {
+  background: transparent;
+}
+
+.menu-drawer[open] .menu-drawer__bars::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.menu-drawer[open] .menu-drawer__bars::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.menu-drawer__nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 1.25rem 1.5rem;
+}
+
+.menu-drawer__list,
+.menu-drawer__list ul,
+.site-nav__list,
+.site-nav__list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-drawer__list a {
+  display: block;
+  padding: 0.5rem 0;
+  text-decoration: none;
+}
+
+.menu-drawer__list ul {
+  padding-left: 1rem;
+}
+
+[aria-current="page"] {
+  font-weight: 700;
+}
+
+/* ---------- メイン画像・文章 ---------- */
+.banner {
+  position: relative;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.banner--small {
+  min-height: 12rem;
+}
+
+.banner--medium {
+  min-height: 20rem;
+}
+
+.banner--large {
+  min-height: 32rem;
+}
+
+.banner__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner__content {
+  position: relative;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.banner--image .banner__content {
+  color: #fff;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.45);
+}
+
+.banner__heading {
+  font-size: 1.75rem;
+  letter-spacing: 0.16em;
+}
+
+.rich-text {
+  padding: 3rem 0;
+}
+
+.rich-text--center {
+  text-align: center;
+}
+
+.block-text--heading {
+  font-size: 1.375rem;
+  font-weight: 600;
+}
+
+.rte > :last-child {
+  margin-bottom: 0;
+}
+
+/* 本文（商品の説明・ショップのページ。Banto が決まった書式から作る HTML: 見出し h2〜h4・表・引用・画像・コード・区切り線） */
+.rte h2,
+.rte h3,
+.rte h4 {
+  margin: 2em 0 0.75em;
+}
+
+.rte h4 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.rte > :first-child {
+  margin-top: 0;
+}
+
+.rte ul,
+.rte ol {
+  padding-left: 1.5em;
+}
+
+.rte li + li {
+  margin-top: 0.25em;
+}
+
+.rte img {
+  display: block;
+  margin: 1.5em 0;
+}
+
+.rte blockquote {
+  margin: 1.5em 0;
+  padding: 0.25em 0 0.25em 1em;
+  border-left: 3px solid var(--color-border);
+}
+
+.rte blockquote p {
+  margin: 0.5em 0;
+}
+
+.rte hr {
+  margin: 2.5em 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.rte code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+/* 表は狭い画面で横に送る（Banto が .banto-table で包む） */
+.rte .banto-table {
+  margin: 1.5em 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rte table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.rte th,
+.rte td {
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--color-border);
+  min-width: 5em;
+  overflow-wrap: normal;
+  text-align: left;
+  vertical-align: top;
+}
+
+.rte th {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---------- 一覧・カード ---------- */
+.collection,
+.featured,
+.search {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.collection__header {
+  margin-bottom: 1.5rem;
+}
+
+.collection__count {
+  font-size: 0.875rem;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.tag-filter ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- ブログ（Banto の同梱モジュール blog） ---------- */
+.blog,
+.article {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.blog__header {
+  margin-bottom: 1.5rem;
+}
+
+.blog__description {
+  margin: 0.5rem 0 0;
+}
+
+.article-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.article-card {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.article-card__link {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  text-decoration: none;
+}
+
+.article-card__media img,
+.article__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.article-card__media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-text) 4%, var(--color-bg));
+}
+
+.article-card__media img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-card__date,
+.article__meta,
+.blog__feed {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--color-text) 65%, var(--color-bg));
+}
+
+.article-card__title {
+  margin: 0.25rem 0;
+  font-size: 1.25rem;
+}
+
+.article-card__excerpt {
+  margin: 0;
+}
+
+.article__title {
+  margin: 0.5rem 0 1.5rem;
+}
+
+.article__media {
+  margin: 0 0 2rem;
+}
+
+.article__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+
+.article__back {
+  margin: 2.5rem 0 0;
+}
+
+.blog__feed {
+  margin-top: 2rem;
+}
+
+@media (min-width: 750px) {
+  .article-card__link {
+    grid-template-columns: 14rem 1fr;
+    align-items: start;
+  }
+
+  .article-card__link > :only-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* 横スクロールの列（ショップのページの「商品を並べる」で layout: scroll） */
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(15rem, 70%);
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0.75rem;
+}
+
+.rail > * {
+  scroll-snap-align: start;
+}
+
+.page-products {
+  margin: 2rem 0;
+}
+
+/* ショップのページの「ボタン」ブロック（::: button） */
+.banto-button {
+  margin: 1.75rem 0;
+}
+
+.rte .banto-button__link,
+.banto-button__link {
+  display: inline-block;
+  min-width: 12rem;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+}
+
+.rte .banto-button__link:hover,
+.banto-button__link:hover {
+  opacity: 0.85;
+}
+
+.card__link {
+  display: block;
+  text-decoration: none;
+}
+
+.card__media {
+  aspect-ratio: 1 / 1;
+  background: color-mix(in srgb, var(--color-text) 4%, var(--color-bg));
+  overflow: hidden;
+}
+
+.card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  background: color-mix(in srgb, var(--color-text) 6%, var(--color-bg));
+}
+
+.card__body {
+  padding-top: 0.75rem;
+}
+
+.card__vendor {
+  margin: 0;
+}
+
+.card__title {
+  font-size: 0.9375rem;
+  font-weight: normal;
+  margin: 0 0 0.25rem;
+}
+
+.card__link:hover .card__title {
+  text-decoration: underline;
+}
+
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
+}
+
+.price__current {
+  font-weight: 600;
+}
+
+.price__compare {
+  font-size: 0.875rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+/* ---------- 商品 ---------- */
+.product {
+  display: grid;
+  gap: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.product__images {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+  margin: 0 -1.25rem;
+  padding: 0;
+}
+
+.product__image {
+  scroll-snap-align: start;
+}
+
+.product__title {
+  font-size: 1.5rem;
+}
+
+.product__info .price {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.product-form {
+  margin-bottom: 2rem;
+}
+
+.product__description {
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.5rem;
+}
+
+/* ---------- カート ---------- */
+.cart,
+.checkout,
+.checkout-done,
+.account,
+.page,
+.not-found {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.cart-table thead {
+  display: none;
+}
+
+.cart-table,
+.cart-table tbody,
+.cart-table tr,
+.cart-table td {
+  display: block;
+}
+
+.cart-item {
+  display: grid !important;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cart-item td {
+  border: 0;
+  padding: 0;
+}
+
+.cart-item__product {
+  grid-column: 1 / -1;
+  display: flex !important;
+  gap: 1rem;
+}
+
+.cart-item__media {
+  flex: none;
+  width: 80px;
+}
+
+.cart-item__price {
+  margin: 0;
+}
+
+.cart-item__quantity {
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-item__quantity input {
+  width: 5rem;
+}
+
+.cart-item__remove {
+  font-size: 0.875rem;
+}
+
+.cart-table__total {
+  text-align: right;
+}
+
+.cart__footer {
+  margin-top: 1.5rem;
+}
+
+.totals {
+  margin: 0 0 1rem;
+}
+
+.coupon {
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 1rem;
+}
+
+.coupon__title {
+  font-size: 1rem;
+}
+
+.coupon__code {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.coupon__code p {
+  margin: 0;
+}
+
+.coupon__code--rejected span {
+  display: block;
+  font-weight: 600;
+}
+
+.payment-methods {
+  border-top: 0;
+  padding-top: 0;
+  margin-bottom: 1rem;
+}
+
+.payment-methods__option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--color-border);
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.payment-methods__option:has(input:checked) {
+  border-color: var(--color-text);
+}
+
+.totals div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+
+.totals dd {
+  margin: 0;
+}
+
+.totals__total {
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-top: 1px solid var(--color-text);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem !important;
+}
+
+.cart__note {
+  font-size: 0.875rem;
+}
+
+.cart__buttons,
+.checkout__buttons,
+.checkout-done__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ---------- レジ ---------- */
+.checkout-steps ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  font-size: 0.8125rem;
+  counter-reset: step;
+}
+
+.checkout-steps li {
+  counter-increment: step;
+  color: color-mix(in srgb, var(--color-text) 60%, var(--color-bg));
+}
+
+.checkout-steps li::before {
+  content: counter(step) ". ";
+}
+
+.checkout-steps [aria-current="step"] {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.checkout__summary {
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
+}
+
+.confirmation {
+  margin: 1.5rem 0;
+}
+
+/* Banto の部品（{% banto_confirmation %}）の中身にもテーマの見た目を当てる。クラスは Banto が決める */
+.banto-confirmation h2 {
+  font-size: 1.125rem;
+  margin-top: 2rem;
+}
+
+/* 明細の表: 金額と数量は折らずに右へそろえ、狭い画面では商品名の列が折れる（body の overflow-wrap: anywhere で金額が途中で折れないように） */
+.banto-confirmation table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.banto-confirmation th,
+.banto-confirmation td {
+  padding: 0.625rem 0.375rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.banto-confirmation thead th {
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.banto-confirmation th:not(:first-child),
+.banto-confirmation td:not(:first-child) {
+  text-align: right;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.banto-confirmation tfoot tr:last-child > * {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.banto-confirmation pre.legal {
+  font: inherit;
+  white-space: pre-wrap;
+  margin: 0 0 1em;
+}
+
+.banto-confirmation .error {
+  border: 2px solid var(--color-text);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+.banto-confirmation button,
+.account__banto button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.banto-confirmation form:first-of-type button[type="submit"] {
+  width: 100%;
+  min-height: 3.25rem;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.checkout-done__number {
+  font-size: 1.125rem;
+}
+
+/* ---------- 会員ページ・フッター ---------- */
+.account__banto {
+  margin-top: 2.5rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  font-size: 0.875rem;
+  padding: 2.5rem 0 2rem;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+.site-footer__copy {
+  margin: 0;
+}
+
+.noren-status {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  z-index: 20;
+  margin: 0;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: 0.875rem;
+  max-width: calc(100% - 2rem);
+}
+
+/* ---------- 広い画面 ---------- */
+@media (min-width: 750px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .page-width {
+    padding-inline: 2rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem 1.5rem;
+  }
+
+  .banner__heading {
+    font-size: 2.25rem;
+  }
+
+  .product {
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    gap: 3rem;
+    padding-top: 2.5rem;
+  }
+
+  .product__images {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    overflow: visible;
+    gap: 1rem;
+    margin: 0;
+  }
+
+  .product__info {
+    position: sticky;
+    top: 2rem;
+    align-self: start;
+  }
+
+  .cart-table thead {
+    display: table-header-group;
+  }
+
+  .cart-table {
+    display: table;
+  }
+
+  .cart-table tbody {
+    display: table-row-group;
+  }
+
+  .cart-table tr,
+  .cart-item {
+    display: table-row !important;
+  }
+
+  .cart-table td,
+  .cart-item td {
+    display: table-cell !important;
+    padding: 1rem 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cart__footer {
+    max-width: 24rem;
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 990px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .menu-drawer {
+    display: none;
+  }
+
+  .site-header__logo {
+    margin-right: 0;
+  }
+
+  .site-nav {
+    display: block;
+    margin-right: auto;
+    font-size: 0.9375rem;
+  }
+
+  .site-nav__list {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .site-nav__list > li {
+    position: relative;
+  }
+
+  .site-nav__list a {
+    text-decoration: none;
+  }
+
+  .site-nav__list ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -1rem;
+    z-index: 5;
+    min-width: 12rem;
+    padding: 0.75rem 1rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+  }
+
+  .site-nav__list > li:hover > ul,
+  .site-nav__list > li:focus-within > ul {
+    display: block;
+  }
+
+  .site-nav__list ul a {
+    display: block;
+    padding: 0.25rem 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- Banto のレイアウトのブロック（グループ・カラム・カバー・画像と文・ギャラリー・アコーディオン・スペーサー） ----------
+   並べ方は Banto が添える CSS。色と大きさだけを暖簾の設定から渡す（docs/pages.md「テーマで決まる値」） */
+:root {
+  --banto-bg-subtle: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
+  --banto-bg-accent: var(--color-accent);
+  --banto-fg-accent: var(--color-accent-text);
+  --banto-bg-dark: var(--color-text);
+  --banto-fg-dark: var(--color-bg);
+  --banto-line: var(--color-border);
+  --banto-radius: 0;
+  --banto-gap: 2rem;
+}
+.rte .banto-cover h2,
+.rte .banto-cover h3 { margin-top: 0; }
+.rte .banto-cover__inner h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+.rte .banto-accordion > summary { font-weight: 500; letter-spacing: .02em; }
+.rte .banto-gallery img,
+.rte .banto-media__fig img { border-radius: 0; }
+
+/* ---------- 暖簾のブロックのスタイル（config/banto_block_styles.json）と、記事を並べるブロック ---------- */
+.banto-group.banto-style-framed { background: transparent; border: 1px solid var(--color-text); border-radius: 0; }
+.banto-group.banto-style-quiet { padding: clamp(2.5rem, 8vw, 6rem) clamp(1rem, 6vw, 4rem); }
+.banto-button.banto-style-outline .banto-button__link { background: transparent; color: inherit; border: 1px solid currentColor; }
+.banto-button.banto-style-outline .banto-button__link:hover { background: currentColor; }
+.banto-button.banto-style-outline .banto-button__link:hover { color: var(--color-bg); }
+.banto-cover .banto-button.banto-style-outline .banto-button__link:hover { color: var(--color-text); background: var(--color-bg); }
+.banto-button.banto-style-text .banto-button__link { background: transparent; color: inherit; border: 0; padding: 0; text-decoration: underline; text-underline-offset: .3em; }
+.banto-cover.banto-style-edge { border-radius: 0; }
+.banto-articles.banto-style-plain .article-card__media { display: none; }
+.page-articles { margin: 1.5rem 0 .5rem; }
+.page-articles--list { grid-template-columns: 1fr; }
+.page-articles__more { margin: 0 0 1.5rem; text-align: right; font-size: .9rem; }

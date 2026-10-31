@@ -1,0 +1,35 @@
+{%- comment -%}
+  ブログの記事（Banto の同梱モジュール blog、/blogs/<ブログ>/<記事>）。article.content は Banto が本文から作った HTML
+{%- endcomment -%}
+<article class="article page-width page-width--narrow">
+  <header class="article__header">
+    <p class="article__meta">
+      <a href="{{ blog.url }}">{{ blog.title }}</a>
+      <span aria-hidden="true">・</span>
+      <time datetime="{{ article.published_at }}">{{ article.published_at | date: '%Y.%m.%d' }}</time>
+      {%- if article.author != blank -%}<span aria-hidden="true">・</span>{{ article.author }}{%- endif -%}
+    </p>
+    <h1 class="article__title">{{ article.title }}</h1>
+  </header>
+  {%- if section.settings.show_image and article.image -%}
+    <div class="article__media"><img src="{{ article.image.src }}" alt="" decoding="async"></div>
+  {%- endif -%}
+  <div class="rte">{{ article.content }}</div>
+  {%- if article.tags.size > 0 -%}
+    <ul class="article__tags" role="list">
+      {%- for tag in article.tags -%}
+        <li><a href="{{ blog.url }}?tag={{ tag | url_encode }}">#{{ tag }}</a></li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+  <p class="article__back"><a href="{{ blog.url }}">← {{ 'blogs.back' | t: title: blog.title }}</a></p>
+</article>
+
+{% schema %}
+{
+  "name": "t:sections.main_article.name",
+  "settings": [
+    { "type": "checkbox", "id": "show_image", "label": "t:sections.main_article.settings.show_image", "default": true }
+  ]
+}
+{% endschema %}

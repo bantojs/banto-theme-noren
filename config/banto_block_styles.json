@@ -1,0 +1,16 @@
+{
+  "group": [
+    { "name": "framed", "label": { "ja": "細い罫線で囲む", "en": "Framed" } },
+    { "name": "quiet", "label": { "ja": "余白を広く", "en": "Airy" } }
+  ],
+  "button": [
+    { "name": "outline", "label": { "ja": "線だけ", "en": "Outline" } },
+    { "name": "text", "label": { "ja": "文字のリンク", "en": "Text link" } }
+  ],
+  "cover": [
+    { "name": "edge", "label": { "ja": "角を丸めない", "en": "Square corners" } }
+  ],
+  "articles": [
+    { "name": "plain", "label": { "ja": "画像なし", "en": "No images" } }
+  ]
+}

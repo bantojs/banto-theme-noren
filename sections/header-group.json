@@ -1,0 +1,15 @@
+{
+  "type": "header",
+  "name": "t:sections.header_group.name",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": { "text": "", "link": "" }
+    },
+    "header": {
+      "type": "header",
+      "settings": { "show_search": true }
+    }
+  },
+  "order": ["announcement", "header"]
+}

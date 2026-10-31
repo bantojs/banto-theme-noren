@@ -1,0 +1,55 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Noren",
+    "theme_version": "0.1.0",
+    "theme_author": "bantojs",
+    "theme_documentation_url": "https://github.com/bantojs/banto-theme-noren"
+  },
+  {
+    "name": "t:settings_schema.colors.name",
+    "settings": [
+      { "type": "color", "id": "color_background", "label": "t:settings_schema.colors.background", "default": "#ffffff" },
+      { "type": "color", "id": "color_text", "label": "t:settings_schema.colors.text", "default": "#111111" },
+      { "type": "color", "id": "color_accent", "label": "t:settings_schema.colors.accent", "info": "t:settings_schema.colors.accent_info", "default": "#111111" },
+      { "type": "color", "id": "color_accent_text", "label": "t:settings_schema.colors.accent_text", "default": "#ffffff" },
+      { "type": "color", "id": "color_border", "label": "t:settings_schema.colors.border", "default": "#dddddd" }
+    ]
+  },
+  {
+    "name": "t:settings_schema.typography.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "font_family",
+        "label": "t:settings_schema.typography.font_family",
+        "info": "t:settings_schema.typography.font_family_info",
+        "options": [
+          { "value": "sans", "label": "t:settings_schema.typography.sans" },
+          { "value": "serif", "label": "t:settings_schema.typography.serif" }
+        ],
+        "default": "sans"
+      },
+      { "type": "range", "id": "font_size_base", "label": "t:settings_schema.typography.font_size_base", "min": 14, "max": 18, "step": 1, "unit": "px", "default": 16 }
+    ]
+  },
+  {
+    "name": "t:settings_schema.layout.name",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "t:settings_schema.layout.page_width", "min": 960, "max": 1600, "step": 40, "unit": "px", "default": 1200 }
+    ]
+  },
+  {
+    "name": "t:settings_schema.logo.name",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "t:settings_schema.logo.image", "info": "t:settings_schema.logo.image_info" },
+      { "type": "range", "id": "logo_width", "label": "t:settings_schema.logo.width", "min": 60, "max": 300, "step": 10, "unit": "px", "default": 140 }
+    ]
+  },
+  {
+    "name": "t:settings_schema.cart.name",
+    "settings": [
+      { "type": "checkbox", "id": "cart_ajax", "label": "t:settings_schema.cart.ajax", "info": "t:settings_schema.cart.ajax_info", "default": true }
+    ]
+  }
+]

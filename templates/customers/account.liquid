@@ -1,0 +1,40 @@
+{%- comment -%}
+  会員ページ。住所の保存・ログインの方法・クーポン・ログアウト・退会などは {% banto_account %} が Banto の部品として描く。
+  住所が載るので、レジと同じ CSP（script-src 'self'）が付く
+{%- endcomment -%}
+<section class="account page-width page-width--narrow">
+  <h1>{{ 'customer.account_title' | t }}</h1>
+  {%- if customer -%}
+    <p class="muted">{{ customer.email }}</p>
+
+    <h2>{{ 'customer.orders' | t }}</h2>
+    {%- if customer.orders_count > 0 -%}
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ 'customer.order' | t }}</th>
+            <th scope="col">{{ 'customer.date' | t }}</th>
+            <th scope="col">{{ 'customer.status' | t }}</th>
+            <th scope="col" class="cart-table__total">{{ 'customer.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for order in customer.orders -%}
+            <tr>
+              <td><a href="{{ order.url }}">{{ order.name }}</a></td>
+              <td>{{ order.created_at | time_tag: '%Y/%m/%d' }}</td>
+              <td>{{ order.status_label }}</td>
+              <td class="cart-table__total">{{ order.total_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    {%- else -%}
+      <p class="empty">{{ 'customer.no_orders' | t }}</p>
+    {%- endif -%}
+  {%- endif -%}
+
+  <div class="account__banto">
+    {% banto_account %}
+  </div>
+</section>

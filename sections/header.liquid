@@ -1,0 +1,66 @@
+{%- assign menu = linklists['main-menu'] -%}
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    {%- if menu.links.size > 0 -%}
+      <details class="menu-drawer">
+        <summary class="menu-drawer__toggle"><span class="menu-drawer__bars" aria-hidden="true"></span><span class="visually-hidden">{{ 'general.menu' | t }}</span></summary>
+        <nav class="menu-drawer__nav" aria-label="{{ 'general.menu' | t }}">
+          {%- render 'menu-list', links: menu.links, class: 'menu-drawer__list' -%}
+          {%- if section.settings.show_search -%}
+            <form class="search-inline" action="{{ routes.search_url }}" method="get" role="search">
+              <label class="visually-hidden" for="DrawerSearch">{{ 'general.search' | t }}</label>
+              <input id="DrawerSearch" type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}">
+              <button type="submit" class="button button--secondary">{{ 'general.search' | t }}</button>
+            </form>
+          {%- endif -%}
+        </nav>
+      </details>
+    {%- endif -%}
+
+    <a class="site-header__logo" href="{{ routes.root_url }}">
+      {%- if settings.logo -%}
+        {{ settings.logo | image_url | image_tag: alt: shop.name, class: 'site-header__logo-image', loading: 'eager' }}
+      {%- else -%}
+        <span class="site-header__name">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    {%- if menu.links.size > 0 -%}
+      <nav class="site-nav" aria-label="{{ 'general.menu' | t }}">
+        {%- render 'menu-list', links: menu.links, class: 'site-nav__list' -%}
+      </nav>
+    {%- endif -%}
+
+    <ul class="site-header__icons" role="list">
+      {%- if section.settings.show_search -%}
+        <li><a href="{{ routes.search_url }}">{{ 'general.search' | t }}</a></li>
+      {%- endif -%}
+      {%- if section.settings.show_account -%}
+        <li>
+          {%- if customer -%}
+            <a href="{{ routes.account_url }}">{{ 'general.account' | t }}</a>
+          {%- else -%}
+            <a href="{{ routes.account_login_url }}">{{ 'general.login' | t }}</a>
+          {%- endif -%}
+        </li>
+      {%- endif -%}
+      <li>
+        <a href="{{ routes.cart_url }}" data-noren-cart-link>
+          {{- 'general.cart' | t -}}
+          <span class="cart-count" data-noren-cart-count>{{ cart.item_count }}</span>
+          <span class="visually-hidden">{{ 'general.cart_count' | t: count: cart.item_count }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "settings": [
+    { "type": "checkbox", "id": "show_search", "label": "t:sections.header.show_search", "default": true },
+    { "type": "checkbox", "id": "show_account", "label": "t:sections.header.show_account", "info": "t:sections.header.show_account_info", "default": false }
+  ]
+}
+{% endschema %}

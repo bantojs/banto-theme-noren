@@ -1,0 +1,14 @@
+{%- comment -%}
+  ページ送り。Banto は位置で次のページへ進むので、出すのは「前へ」「次へ」と全体の件数だけ。
+  - paginate: {% paginate %} の中の paginate
+{%- endcomment -%}
+{%- if paginate.previous or paginate.next -%}
+  <nav class="pagination" aria-label="{{ 'general.pagination' | t }}">
+    {%- if paginate.previous -%}
+      <a class="button button--secondary" href="{{ paginate.previous.url }}" rel="prev">{{ 'general.previous' | t }}</a>
+    {%- endif -%}
+    {%- if paginate.next -%}
+      <a class="button button--secondary" href="{{ paginate.next.url }}" rel="next">{{ 'general.next' | t }}</a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

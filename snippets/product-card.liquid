@@ -1,0 +1,25 @@
+{%- comment -%}
+  商品カード（一覧・検索・おすすめ）。一覧では軽く保つ（48 件を 1 ページで描く）。
+  - product: 商品（一覧の形。在庫の数は無く、available は値段のついた SKU があるか）
+  - eager: 先頭の数件だけ true（画像をすぐ読む）
+{%- endcomment -%}
+<li class="card">
+  <a class="card__link" href="{{ product.url }}">
+    <div class="card__media">
+      {%- if product.featured_image -%}
+        {%- if eager -%}
+          {%- render 'responsive-image', image: product.featured_image, sizes: '(min-width: 990px) 25vw, 50vw', loading: 'eager', class: 'card__image' -%}
+        {%- else -%}
+          {%- render 'responsive-image', image: product.featured_image, sizes: '(min-width: 990px) 25vw, 50vw', class: 'card__image' -%}
+        {%- endif -%}
+      {%- else -%}
+        <span class="card__placeholder" aria-hidden="true"></span>
+      {%- endif -%}
+    </div>
+    <div class="card__body">
+      {%- if product.vendor != blank -%}<p class="card__vendor">{{ product.vendor }}</p>{%- endif -%}
+      <h3 class="card__title">{{ product.title }}</h3>
+      {%- render 'price', product: product -%}
+    </div>
+  </a>
+</li>

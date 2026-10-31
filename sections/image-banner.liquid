@@ -1,0 +1,57 @@
+{%- liquid
+  assign s = section.settings
+  assign heading = s.heading
+  assign text = s.text | strip_html | strip
+  if s.use_shop_name and heading == blank
+    assign heading = shop.name
+  endif
+  assign has_image = false
+  if s.image
+    assign has_image = true
+  endif
+-%}
+{%- if has_image or heading != blank or text != blank -%}
+<section class="banner banner--{{ s.height }}{% if has_image %} banner--image{% endif %}">
+  {%- if has_image -%}
+    {{ s.image | image_url | image_tag: alt: s.image_alt, class: 'banner__image', loading: 'eager', fetchpriority: 'high' }}
+  {%- endif -%}
+  <div class="page-width banner__content">
+    {%- if heading != blank -%}<h1 class="banner__heading">{{ heading }}</h1>{%- endif -%}
+    {%- if text != blank -%}
+      <div class="banner__text rte">{{ s.text }}</div>
+    {%- elsif s.use_shop_name and shop.description != blank -%}
+      <p class="banner__text">{{ shop.description }}</p>
+    {%- endif -%}
+    {%- if s.button_label != blank and s.button_link != blank -%}
+      <a class="button" href="{{ s.button_link }}">{{ s.button_label }}</a>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.image_banner.name",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "t:sections.image_banner.image", "info": "t:sections.image_banner.image_info" },
+    { "type": "text", "id": "image_alt", "label": "t:sections.image_banner.image_alt", "default": "" },
+    { "type": "checkbox", "id": "use_shop_name", "label": "t:sections.image_banner.use_shop_name", "info": "t:sections.image_banner.use_shop_name_info", "default": false },
+    { "type": "text", "id": "heading", "label": "t:sections.image_banner.heading", "default": "" },
+    { "type": "richtext", "id": "text", "label": "t:sections.image_banner.text" },
+    { "type": "text", "id": "button_label", "label": "t:sections.image_banner.button_label", "default": "" },
+    { "type": "url", "id": "button_link", "label": "t:sections.image_banner.button_link" },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:sections.image_banner.height",
+      "options": [
+        { "value": "small", "label": "t:sections.image_banner.small" },
+        { "value": "medium", "label": "t:sections.image_banner.medium" },
+        { "value": "large", "label": "t:sections.image_banner.large" }
+      ],
+      "default": "medium"
+    }
+  ],
+  "presets": [{ "name": "t:sections.image_banner.name" }]
+}
+{% endschema %}

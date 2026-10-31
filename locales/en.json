@@ -1,0 +1,129 @@
+{
+  "general": {
+    "skip_to_content": "Skip to content",
+    "menu": "Menu",
+    "footer_menu": "Information",
+    "search": "Search",
+    "search_placeholder": "Search products (3+ characters)",
+    "account": "Account",
+    "login": "Log in",
+    "cart": "Cart",
+    "cart_count": {
+      "zero": "Your cart is empty",
+      "one": "{{ count }} item in cart",
+      "other": "{{ count }} items in cart"
+    },
+    "continue_shopping": "Continue shopping",
+    "pagination": "Pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "added_to_cart": "Added to cart",
+    "add_failed": "Couldn't add to cart. Please try again."
+  },
+  "products": {
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "quantity": "Quantity",
+    "variant": "Option",
+    "regular_price": "Regular price",
+    "sale_price": "Sale price",
+    "tax_included": "(tax incl.)",
+    "price_from": "From {{ price }}"
+  },
+  "collections": {
+    "all": "All",
+    "count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "empty": "No products yet.",
+    "filter_by_tag": "Filter by tag"
+  },
+  "search": {
+    "title": "Search",
+    "results_count": {
+      "zero": "No results for “{{ terms }}”",
+      "one": "{{ count }} result for “{{ terms }}”",
+      "other": "{{ count }} results for “{{ terms }}”"
+    },
+    "no_results": "Try a different word.",
+    "too_short": "Please enter at least 3 characters."
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "product": "Product",
+    "quantity": "Quantity",
+    "quantity_for": "Quantity for {{ title }}",
+    "line_total": "Total",
+    "remove": "Remove",
+    "short": "Not enough stock. Please reduce the quantity or remove the item.",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "tax_included": "All prices include tax.",
+    "shipping_later": "Shipping is shown on the review page after you enter your address.",
+    "shipping_link": "About shipping",
+    "update": "Update",
+    "checkout": "Check out",
+    "coupon_title": "Coupon",
+    "coupon_code": "Coupon code",
+    "coupon_apply": "Apply",
+    "coupon_remove": "Remove",
+    "payment_method": "Payment method"
+  },
+  "checkout": {
+    "steps": "Checkout steps",
+    "payment": "Payment",
+    "address_title": "Shipping address",
+    "confirm_title": "Review your order",
+    "subtotal": "Subtotal",
+    "free_shipping_applied": "Free shipping",
+    "contact": "Contact",
+    "address": "Address",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "postal_code": "Postal code",
+    "state": "Prefecture",
+    "state_placeholder": "Select",
+    "city": "City",
+    "line1": "Address line 1",
+    "line2": "Address line 2",
+    "required": "Required",
+    "optional": "Optional",
+    "shipping_fee": "Shipping",
+    "delivery": "Delivery",
+    "delivery_date": "Delivery date",
+    "delivery_slot": "Time",
+    "delivery_none": "No preference",
+    "marketing_consent": "Email me news from the shop",
+    "to_confirm": "Continue to review",
+    "back_to_cart": "Back to cart",
+    "done_title": "Thank you for your order",
+    "pending_title": "Confirming your payment",
+    "done_unknown_title": "About your order",
+    "order_number": "Order number",
+    "contact_us": "Contact us"
+  },
+  "customer": {
+    "account_title": "Account",
+    "orders": "Order history",
+    "order": "Order",
+    "date": "Date",
+    "status": "Status",
+    "total": "Total",
+    "no_orders": "You haven't placed any orders yet."
+  },
+  "not_found": {
+    "title": "Page not found",
+    "text": "The page you were looking for may have moved or no longer exists."
+  },
+  "blogs": {
+    "filter_by_tag": "Filter by tag",
+    "all": "All",
+    "empty": "No articles yet.",
+    "back": "Back to {{ title }}",
+    "see_all": "See all"
+  }
+}

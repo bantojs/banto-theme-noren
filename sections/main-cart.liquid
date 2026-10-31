@@ -1,0 +1,115 @@
+{%- comment -%}
+  カート。数を変える・外すは JS が無くても動く（{% form 'cart' %} と item.url_to_remove）。
+  送料と送料無料のクーポンは、配送先が決まってから最終確認の画面で出る。
+  フォームは入れ子にできないので、{% form 'cart' %} は数量の表だけを包み、決済手段の欄とボタンは form="CartForm" で結ぶ
+  （クーポンの欄はそれぞれ別のフォーム）
+{%- endcomment -%}
+{%- assign shop_root = routes.cart_url | remove_last: '/cart' -%}
+<section class="cart page-width">
+  <h1>{{ 'cart.title' | t }}</h1>
+  {%- if cart_error -%}
+    <p class="notice notice--error" role="alert">{{ cart_error }}</p>
+  {%- endif -%}
+
+  {%- if cart.empty -%}
+    <p class="empty">{{ 'cart.empty' | t }}</p>
+    <p><a class="button button--secondary" href="{{ routes.root_url }}">{{ 'general.continue_shopping' | t }}</a></p>
+  {%- else -%}
+    {%- assign has_short = false -%}
+    {%- form 'cart', cart, class: 'cart-form', id: 'CartForm' -%}
+      <table class="cart-table">
+        <caption class="visually-hidden">{{ 'cart.title' | t }}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{{ 'cart.product' | t }}</th>
+            <th scope="col">{{ 'cart.quantity' | t }}</th>
+            <th scope="col" class="cart-table__total">{{ 'cart.line_total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            {%- unless item.available %}{% assign has_short = true %}{% endunless -%}
+            <tr class="cart-item{% unless item.available %} cart-item--short{% endunless %}">
+              <td class="cart-item__product">
+                <div class="cart-item__media">
+                  {%- if item.image -%}
+                    {{ item.image | image_url: width: 160 | image_tag: alt: item.product_title, width: 80 }}
+                  {%- endif -%}
+                </div>
+                <div>
+                  <a href="{{ item.url }}">{{ item.product_title }}</a>
+                  {%- if item.variant_title -%}<p class="cart-item__variant">{{ item.variant_title }}</p>{%- endif -%}
+                  <p class="cart-item__price">{{ item.price | money }}</p>
+                  {%- unless item.available -%}<p class="notice notice--error">{{ 'cart.short' | t }}</p>{%- endunless -%}
+                </div>
+              </td>
+              <td class="cart-item__quantity">
+                <label class="visually-hidden" for="Updates-{{ forloop.index }}">{{ 'cart.quantity_for' | t: title: item.title }}</label>
+                <input id="Updates-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" max="99" inputmode="numeric">
+                <a class="cart-item__remove" href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}<span class="visually-hidden">: {{ item.title }}</span></a>
+              </td>
+              <td class="cart-table__total">{{ item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    {%- endform -%}
+
+    <div class="cart__footer">
+      {%- if routes.cart_coupon_url -%}
+        <div class="coupon">
+          <h2 class="coupon__title">{{ 'cart.coupon_title' | t }}</h2>
+          {%- for code in cart.discount_codes -%}
+            <div class="coupon__code{% unless code.applicable %} coupon__code--rejected{% endunless %}">
+              <p>
+                <strong>{{ code.code }}</strong>
+                {%- unless code.applicable %} <span role="alert">{{ code.banto_message }}</span>{% endunless -%}
+              </p>
+              <form method="post" action="{{ routes.cart_coupon_url }}">
+                <input type="hidden" name="remove" value="{{ code.code }}">
+                <button type="submit" class="button button--secondary button--small">{{ 'cart.coupon_remove' | t }}<span class="visually-hidden">: {{ code.code }}</span></button>
+              </form>
+            </div>
+          {%- endfor -%}
+          <form class="search-inline" method="post" action="{{ routes.cart_coupon_url }}">
+            <label class="visually-hidden" for="CouponCode">{{ 'cart.coupon_code' | t }}</label>
+            <input id="CouponCode" type="text" name="code" maxlength="32" autocomplete="off" autocapitalize="characters" placeholder="{{ 'cart.coupon_code' | t }}">
+            <button type="submit" class="button button--secondary">{{ 'cart.coupon_apply' | t }}</button>
+          </form>
+        </div>
+      {%- endif -%}
+      <dl class="totals">
+        <div><dt>{{ 'cart.subtotal' | t }}</dt><dd>{{ cart.items_subtotal_price | money }}</dd></div>
+        {%- for discount in cart.cart_level_discount_applications -%}
+          <div><dt>{{ discount.title }}</dt><dd>-{{ discount.total_allocated_amount | money }}</dd></div>
+        {%- endfor -%}
+        <div class="totals__total"><dt>{{ 'cart.total' | t }}</dt><dd>{{ cart.total_price | money }}</dd></div>
+      </dl>
+      <p class="cart__note">{{ 'cart.tax_included' | t }} {{ 'cart.shipping_later' | t }} <a href="{{ shop_root }}/shipping">{{ 'cart.shipping_link' | t }}</a></p>
+      {%- comment %} 決済手段が 2 つ以上のときだけ選ばせる（1 つならその手段で進む。KOMOJU の中の支払い方法は KOMOJU のページで選ぶ） {% endcomment -%}
+      {%- if cart.banto_payment_methods.size > 1 -%}
+        <fieldset class="payment-methods">
+          <legend>{{ 'cart.payment_method' | t }}</legend>
+          {%- for method in cart.banto_payment_methods -%}
+            <label class="payment-methods__option">
+              <input type="radio" name="provider" value="{{ method.id }}" form="CartForm"{% if forloop.first %} checked{% endif %}>
+              {{ method.name }}
+            </label>
+          {%- endfor -%}
+        </fieldset>
+      {%- endif -%}
+      <div class="cart__buttons">
+        <button type="submit" name="update" class="button button--secondary" form="CartForm">{{ 'cart.update' | t }}</button>
+        <button type="submit" name="checkout" class="button" form="CartForm"{% if has_short %} disabled{% endif %}>{{ 'cart.checkout' | t }}</button>
+      </div>
+    </div>
+    <p><a href="{{ routes.root_url }}">{{ 'general.continue_shopping' | t }}</a></p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_cart.name",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+{%- comment %} 法務のページ（特定商取引法に基づく表記・プライバシーポリシー・返品）と、ショップのページ（Banto の同梱モジュール pages、/pages/<handle>）。page.content は Banto が文面・本文から作った HTML {% endcomment -%}
+<article class="page page-width page-width--narrow">
+  <h1>{{ page.title }}</h1>
+  <div class="rte">{{ page.content }}</div>
+</article>
+
+{% schema %}
+{
+  "name": "t:sections.main_page.name",
+  "settings": []
+}
+{% endschema %}

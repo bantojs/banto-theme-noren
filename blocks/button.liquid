@@ -1,0 +1,26 @@
+{%- if block.settings.label != blank and block.settings.link != blank -%}
+  <p class="block-button" {{ block.shopify_attributes }}>
+    <a class="button{% if block.settings.style == 'secondary' %} button--secondary{% endif %}" href="{{ block.settings.link }}">{{ block.settings.label }}</a>
+  </p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:blocks.button.name",
+  "settings": [
+    { "type": "text", "id": "label", "label": "t:blocks.button.label", "default": "" },
+    { "type": "url", "id": "link", "label": "t:blocks.button.link" },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:blocks.button.style",
+      "options": [
+        { "value": "primary", "label": "t:blocks.button.primary" },
+        { "value": "secondary", "label": "t:blocks.button.secondary" }
+      ],
+      "default": "primary"
+    }
+  ],
+  "presets": [{ "name": "t:blocks.button.name" }]
+}
+{% endschema %}

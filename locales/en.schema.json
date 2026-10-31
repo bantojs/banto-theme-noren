@@ -1,0 +1,144 @@
+{
+  "settings_schema": {
+    "colors": {
+      "name": "Colors",
+      "background": "Background",
+      "text": "Text",
+      "accent": "Buttons",
+      "accent_info": "Color for buttons and emphasis",
+      "accent_text": "Button text",
+      "border": "Borders"
+    },
+    "typography": {
+      "name": "Typography",
+      "font_family": "Font",
+      "font_family_info": "Uses fonts installed on the device (nothing is loaded from outside)",
+      "sans": "Sans-serif",
+      "serif": "Serif",
+      "font_size_base": "Body text size"
+    },
+    "layout": {
+      "name": "Layout",
+      "page_width": "Maximum page width"
+    },
+    "logo": {
+      "name": "Logo",
+      "image": "Logo image",
+      "image_info": "Choose from images in the theme's assets/. Without one, the shop name is shown as text",
+      "width": "Logo width"
+    },
+    "cart": {
+      "name": "Cart",
+      "ajax": "Add to cart without leaving the page",
+      "ajax_info": "When off, adding an item opens the cart page"
+    }
+  },
+  "sections": {
+    "header_group": {
+      "name": "Header"
+    },
+    "footer_group": {
+      "name": "Footer"
+    },
+    "announcement_bar": {
+      "name": "Announcement bar",
+      "text": "Text",
+      "link": "Link"
+    },
+    "header": {
+      "name": "Header",
+      "show_search": "Show search",
+      "show_account": "Show account link",
+      "show_account_info": "Turn on only for shops that use member accounts"
+    },
+    "footer": {
+      "name": "Footer",
+      "text": "Text"
+    },
+    "image_banner": {
+      "name": "Image banner",
+      "image": "Image",
+      "image_info": "Choose from images in the theme's assets/",
+      "image_alt": "Image description (alt text)",
+      "use_shop_name": "Show the shop name and introduction when the heading is empty",
+      "use_shop_name_info": "The introduction is the shop's description setting",
+      "heading": "Heading",
+      "text": "Text",
+      "button_label": "Button label",
+      "button_link": "Button link",
+      "height": "Height",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
+    },
+    "rich_text": {
+      "name": "Rich text",
+      "align": "Alignment",
+      "left": "Left",
+      "center": "Center"
+    },
+    "featured_collection": {
+      "name": "Featured products",
+      "heading": "Heading",
+      "products_to_show": "Products to show"
+    },
+    "main_collection": {
+      "name": "Product list",
+      "show_heading": "Show heading",
+      "heading": "Heading (home page)",
+      "heading_info": "Home page only. Empty means the shop name",
+      "show_tags": "Show tag filter links"
+    },
+    "main_product": {
+      "name": "Product"
+    },
+    "main_cart": {
+      "name": "Cart"
+    },
+    "main_search": {
+      "name": "Search"
+    },
+    "main_page": {
+      "name": "Page"
+    },
+    "main_404": {
+      "name": "Not found"
+    },
+    "main_blog": {
+      "name": "Blog articles",
+      "settings": {
+        "show_image": {
+          "label": "Show featured images"
+        },
+        "show_tags": {
+          "label": "Show tag filter"
+        }
+      }
+    },
+    "main_article": {
+      "name": "Blog article",
+      "settings": {
+        "show_image": {
+          "label": "Show featured image"
+        }
+      }
+    }
+  },
+  "blocks": {
+    "text": {
+      "name": "Text",
+      "text": "Text",
+      "style": "Style",
+      "heading": "Heading",
+      "body": "Body"
+    },
+    "button": {
+      "name": "Button",
+      "label": "Label",
+      "link": "Link",
+      "style": "Style",
+      "primary": "Solid",
+      "secondary": "Outline"
+    }
+  }
+}

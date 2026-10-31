@@ -1,0 +1,59 @@
+{%- comment -%}
+  商品の一覧（トップ・カテゴリー・タグ）。1 ページの数は Banto が決める（48）
+{%- endcomment -%}
+<section class="collection page-width">
+  {%- if section.settings.show_heading -%}
+    <header class="collection__header">
+      {%- comment %} トップではメイン画像の見出しが h1 なので h2 にする {% endcomment -%}
+      {%- assign heading = section.settings.heading | default: collection.title -%}
+      {%- if template.name == 'index' -%}
+        <h2 class="collection__title">{{ heading }}</h2>
+      {%- else -%}
+        <h1 class="collection__title">{{ collection.title }}</h1>
+      {%- endif -%}
+      {%- if collection.description != blank -%}<div class="collection__description rte">{{ collection.description }}</div>{%- endif -%}
+      {%- if collection.products_count > 0 -%}
+        <p class="collection__count">{{ 'collections.count' | t: count: collection.products_count }}</p>
+      {%- endif -%}
+    </header>
+  {%- endif -%}
+
+  {%- if section.settings.show_tags and collection.all_tags.size > 0 -%}
+    <nav class="tag-filter" aria-label="{{ 'collections.filter_by_tag' | t }}">
+      <ul role="list">
+        <li><a href="{{ routes.root_url }}"{% if current_tags.size == 0 %} aria-current="page"{% endif %}>{{ 'collections.all' | t }}</a></li>
+        {%- for tag in collection.all_tags -%}
+          <li><a href="{{ routes.root_url }}?tag={{ tag | url_encode }}"{% if current_tags contains tag %} aria-current="page"{% endif %}>#{{ tag }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+
+  {%- paginate collection.products by 48 -%}
+    {%- if collection.products.size > 0 -%}
+      <ul class="grid" role="list">
+        {%- for product in collection.products -%}
+          {%- if forloop.index <= 4 -%}
+            {%- render 'product-card', product: product, eager: true -%}
+          {%- else -%}
+            {%- render 'product-card', product: product -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="empty">{{ 'collections.empty' | t }}</p>
+    {%- endif -%}
+    {%- render 'pagination', paginate: paginate -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_collection.name",
+  "settings": [
+    { "type": "checkbox", "id": "show_heading", "label": "t:sections.main_collection.show_heading", "default": true },
+    { "type": "text", "id": "heading", "label": "t:sections.main_collection.heading", "info": "t:sections.main_collection.heading_info", "default": "" },
+    { "type": "checkbox", "id": "show_tags", "label": "t:sections.main_collection.show_tags", "default": true }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,54 @@
+{%- comment -%}
+  ブログの記事の一覧（Banto の同梱モジュール blog、/blogs/<ブログ>）。新しい順に 1 ページ 12 件（Banto が決める）。
+  ?tag= で絞ったときは current_tags にタグが入る
+{%- endcomment -%}
+<section class="blog page-width page-width--narrow">
+  <header class="blog__header">
+    <h1 class="blog__title">{% if current_tags.size > 0 %}#{{ current_tags.first }}{% else %}{{ blog.title }}{% endif %}</h1>
+    {%- if blog.description != blank and current_tags.size == 0 -%}<p class="blog__description">{{ blog.description }}</p>{%- endif -%}
+  </header>
+
+  {%- if section.settings.show_tags and blog.all_tags.size > 0 -%}
+    <nav class="tag-filter" aria-label="{{ 'blogs.filter_by_tag' | t }}">
+      <ul role="list">
+        <li><a href="{{ blog.url }}"{% if current_tags.size == 0 %} aria-current="page"{% endif %}>{{ 'blogs.all' | t }}</a></li>
+        {%- for tag in blog.all_tags -%}
+          <li><a href="{{ blog.url }}?tag={{ tag | url_encode }}"{% if current_tags contains tag %} aria-current="page"{% endif %}>#{{ tag }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+
+  {%- if blog.articles.size > 0 -%}
+    <ul class="article-list" role="list">
+      {%- for article in blog.articles -%}
+        <li class="article-card">
+          <a class="article-card__link" href="{{ article.url }}">
+            {%- if section.settings.show_image and article.image -%}
+              <div class="article-card__media"><img src="{{ article.image.src }}" alt="" loading="lazy" decoding="async"></div>
+            {%- endif -%}
+            <div class="article-card__body">
+              <p class="article-card__date"><time datetime="{{ article.published_at }}">{{ article.published_at | date: '%Y.%m.%d' }}</time></p>
+              <h2 class="article-card__title">{{ article.title }}</h2>
+              {%- if article.excerpt != blank -%}<p class="article-card__excerpt">{{ article.excerpt }}</p>{%- endif -%}
+            </div>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <p class="empty">{{ 'blogs.empty' | t }}</p>
+  {%- endif -%}
+  {%- render 'pagination', paginate: paginate -%}
+  <p class="blog__feed"><a href="{{ blog.url }}/feed.atom">RSS</a></p>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_blog.name",
+  "settings": [
+    { "type": "checkbox", "id": "show_image", "label": "t:sections.main_blog.settings.show_image", "default": true },
+    { "type": "checkbox", "id": "show_tags", "label": "t:sections.main_blog.settings.show_tags", "default": true }
+  ]
+}
+{% endschema %}

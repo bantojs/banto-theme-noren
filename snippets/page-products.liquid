@@ -1,0 +1,13 @@
+{%- comment -%}
+  ショップのページの「商品を並べる」ブロック（Banto の同梱モジュール pages。本文の ::: products の場所に入る）。
+  選ぶのは Banto、描くのはここ。
+  - products: 並べる商品（一覧の形。数・並び順・カテゴリー・タグは Banto が当てたもの）
+  - block: ブロックの設定（layout: grid / scroll、limit、sort、category、tag、index）
+{%- endcomment -%}
+{%- if products.size > 0 -%}
+  <ul class="{% if block.layout == 'scroll' %}rail{% else %}grid{% endif %} page-products" role="list">
+    {%- for product in products -%}
+      {%- render 'product-card', product: product -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

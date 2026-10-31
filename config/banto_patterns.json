@@ -1,0 +1,22 @@
+{
+  "patterns": [
+    {
+      "name": "noren-hero",
+      "title": { "ja": "暖簾: 大きな見出しの入口", "en": "Noren: hero" },
+      "description": { "ja": "画面いっぱいの画像に、細い文字の見出しと線だけのボタン", "en": "Full-height image with a light heading and an outline button" },
+      "body": ":::: cover height=full overlay=dark align=center valign=center\n## 季節の品をそろえました\n\n手に取るたびにうれしくなる、日々の道具。\n\n::: button style=outline [商品を見る](/products)\n::::"
+    },
+    {
+      "name": "noren-notice",
+      "title": { "ja": "暖簾: お知らせの帯", "en": "Noren: notice band" },
+      "description": { "ja": "細い罫線で囲んだ短いお知らせ", "en": "A short notice framed by fine lines" },
+      "body": "::: group style=framed pad=s\n**お知らせ** 年末年始は 12 月 29 日から 1 月 3 日までお休みします。\n:::"
+    },
+    {
+      "name": "noren-story",
+      "title": { "ja": "暖簾: お店の話", "en": "Noren: our story" },
+      "description": { "ja": "左に画像、右に見出しと文、下に線だけのボタン", "en": "Image on the left, story on the right" },
+      "body": ":::: media side=left valign=center\n## 小さな店のはじまり\n\nお店の歩みや、品えらびで大切にしていることを書きます。\n\n::: button style=outline [私たちについて](/pages/about)\n::::"
+    }
+  ]
+}

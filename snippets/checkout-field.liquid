@@ -1,0 +1,22 @@
+{%- comment -%}
+  レジの入力欄 1 つ。
+  - name: 欄の名前（Banto の名前。customer_name など）
+  - label: 見出しの翻訳の鍵
+  - value: 入れた値（誤りで描き直したとき）
+  - type（既定 text）・autocomplete・inputmode・required
+{%- endcomment -%}
+<div class="field">
+  <label for="{{ name }}">
+    {{- label | t -}}
+    {%- if required %} <span class="field__required">{{ 'checkout.required' | t }}</span>{% else %} <span class="field__optional">{{ 'checkout.optional' | t }}</span>{% endif -%}
+  </label>
+  <input
+    id="{{ name }}"
+    type="{{ type | default: 'text' }}"
+    name="{{ name }}"
+    value="{{ value }}"
+    {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+    {% if inputmode %}inputmode="{{ inputmode }}"{% endif %}
+    {% if required %}required{% endif %}
+  >
+</div>
