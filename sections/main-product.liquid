@@ -1,7 +1,9 @@
 {%- comment -%}
   商品のページ。SKU の選択は JS が無くても <select> で選べる。JS は値段・URL（?sku=）・SKU ごとの画像の並びを入れ替える
   （画像の並びは Banto が ?sku= で決めるので、このセクションを ?sku=…&section_id=… で描き直して差し替える）。
-  在庫は「あるか」だけ（数は渡らない）
+  在庫は「あるか」だけ（数は渡らない）。
+  Banto v0.8 から: 会員限定で買えない商品（product.purchasable が false）は「会員の方だけ」とログインへの案内、
+  採寸表（product.size_chart）とレビュー（product.reviews）を出す。値段の会員価格は snippets/price
 {%- endcomment -%}
 {%- assign current = product.selected_or_first_available_variant -%}
 <section class="product page-width" data-noren-product data-section-id="{{ section.id }}" data-product-url="{{ product.url }}">
@@ -54,7 +56,12 @@
         <label for="Quantity-{{ section.id }}">{{ 'products.quantity' | t }}</label>
         <input id="Quantity-{{ section.id }}" type="number" name="quantity" value="1" min="1" max="99" inputmode="numeric">
       </div>
-      {%- if current.available -%}
+      {%- if product.purchasable == false -%}
+        <button type="submit" class="button button--full" data-noren-add disabled>{{ 'products.members_only' | t }}</button>
+        {%- unless customer -%}
+          <p class="product__members-only"><a href="{{ routes.account_login_url }}">{{ 'products.members_only_login' | t }}</a></p>
+        {%- endunless -%}
+      {%- elsif current.available -%}
         <button type="submit" class="button button--full" data-noren-add>{{ 'products.add_to_cart' | t }}</button>
       {%- else -%}
         <button type="submit" class="button button--full" data-noren-add disabled>{{ 'products.sold_out' | t }}</button>
@@ -64,8 +71,11 @@
     {%- if product.description != blank -%}
       <div class="product__description rte">{{ product.description }}</div>
     {%- endif -%}
+
+    {%- render 'size-chart', chart: product.size_chart -%}
   </div>
 </section>
+{%- render 'product-reviews', reviews: product.reviews -%}
 
 {% schema %}
 {

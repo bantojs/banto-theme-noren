@@ -305,6 +305,44 @@ describe("すべてのページをテーマで描く", () => {
     expect(checkThemeEditorFiles(files)).toEqual([]);
   });
 
+  // Banto v0.8 から: 採寸表・レビュー・会員価格・会員限定・画像の段
+  it("商品のページの採寸表・レビュー・会員価格・会員限定と、画像の段の srcset", async () => {
+    const { sb, shop, b } = await setup({ size_charts: true, audiences: true });
+    const tee = sb.tables.products.find((p) => p["slug"] === "tee")!;
+    const bag = sb.tables.products.find((p) => p["slug"] === "bag")!;
+    // 採寸表（商品の段）
+    sb.tables.size_charts.push({ id: "sc-1", shop_id: shop.id, category_id: null, product_id: tee["id"], hidden: false, axis: null, columns: [{ key: "c1", label: "着丈", unit: "cm" }], rows: [{ value: "S", cells: { c1: "66" } }, { value: "M", cells: { c1: "70" } }], note: "平置きで測っています", image_key: null });
+    // レビュー（外部プラグインが置いた要約）
+    sb.tables.hook_endpoints.push({ id: "ep-r", shop_id: shop.id, name: "レビュー", url: "https://r.example/b", events: [], enabled: true, settings: {}, manifest: null, app_handle: "reviews", created_at: "" });
+    sb.tables.app_data.push({ shop_id: shop.id, endpoint_id: "ep-r", product_id: tee["id"], kind: "reviews.v1", key: "", data: { rating_avg: 4.5, rating_count: 2, items: [{ id: "r1", rating: 5, title: "最高", body: "<b>着心地</b>がよい", author_display: "T さん", created_at: "2026-10-01T00:00:00Z", verified_purchase: true }] }, public: true, updated_at: "" });
+    // 会員価格（ゴールド会員は 20% 引き）と、会員だけが買える商品
+    const GOLD = "11111111-1111-4111-8111-111111111111";
+    sb.tables.audiences.push({ id: GOLD, shop_id: shop.id, name: "ゴールド", condition: { all: [{ member: true }, { attr: "rank", in: ["gold"] }] } });
+    sb.tables.price_rules.push({ id: "pr-1", shop_id: shop.id, name: "ゴールド 20%", audience_id: GOLD, product_ids: [tee["id"]], sku_ids: [], product_condition: null, price_jpy: null, percent_off: 20, starts_at: null, ends_at: null, enabled: true });
+    bag["audience_id"] = GOLD;
+    bag["audience_mode"] = "buy";
+    sb.tables.product_images.find((i) => i["id"] === "img-1")!["variants"] = [800];
+    await preview(b, shop.id);
+
+    const html = await (await b.get("/p/tee")).text();
+    expectNoren(html, "product");
+    expect(html).toContain('<details class="size-chart" open>');
+    expect(html).toContain("着丈（cm）");
+    expect(html).toContain("平置きで測っています");
+    expect(html).toContain('<section class="reviews page-width" data-banto-reviews>');
+    expect(html).toContain("&lt;b&gt;着心地&lt;/b&gt;がよい");
+    expect(html).not.toContain("&amp;lt;");
+    expect(html).toContain("購入済み");
+    expect(html).toMatch(/会員価格 ¥2,640（税込）/);
+    // 画像は Banto の段を srcset に（400・800・本画像）
+    expect(html).toMatch(/srcset="[^"]*tee-w-400\.webp 400w, [^"]*tee-w\.800\.webp 800w, [^"]*tee-w\.webp 1600w"/);
+
+    const members = await (await b.get("/p/bag")).text();
+    expectNoren(members, "product");
+    expect(members).toContain("会員の方だけ購入できます");
+    expect(members).toContain('href="/account/login"');
+  });
+
   it("公開中の版として描く（プレビューでなくても既定のテーマに戻らない）", async () => {
     const { b } = await setup();
     const html = await (await b.get("/p/tee")).text();

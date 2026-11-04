@@ -1,0 +1,32 @@
+{%- comment -%}
+  採寸表（Banto の同梱モジュール「採寸表」、v0.7 から。docs/size-charts.md）。表が無ければ何も出さない。
+  選んだ SKU の行（row.selected）を目立たせる。SKU を選び直すとセクションごと描き直されるので、目立つ行も入れ替わる
+  - chart: product.size_chart
+{%- endcomment -%}
+{%- if chart and chart.columns.size > 0 -%}
+  <details class="size-chart" open>
+    <summary class="size-chart__title">{{ 'products.size_chart' | t }}</summary>
+    <div class="size-chart__scroll">
+      <table class="size-chart__table">
+        <thead>
+          <tr>
+            <th scope="col">{% if chart.axis_name != blank %}{{ chart.axis_name }}{% else %}{{ 'products.size' | t }}{% endif %}</th>
+            {%- for c in chart.columns -%}<th scope="col">{{ c.heading }}</th>{%- endfor -%}
+          </tr>
+        </thead>
+        <tbody>
+          {%- for row in chart.rows -%}
+            <tr{% if row.selected %} class="is-selected" aria-current="true"{% endif %}>
+              <th scope="row">{{ row.value }}</th>
+              {%- for cell in row.cells -%}<td>{{ cell }}</td>{%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+    {%- if chart.image -%}
+      <img class="size-chart__image" src="{{ chart.image.src }}" alt="{{ 'products.size_chart_image' | t }}" {% if chart.image.width %}width="{{ chart.image.width }}" height="{{ chart.image.height }}"{% endif %} loading="lazy" decoding="async">
+    {%- endif -%}
+    {%- if chart.note != blank -%}<p class="size-chart__note">{{ chart.note }}</p>{%- endif -%}
+  </details>
+{%- endif -%}

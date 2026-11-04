@@ -29,7 +29,19 @@
     "regular_price": "Regular price",
     "sale_price": "Sale price",
     "tax_included": "(tax incl.)",
-    "price_from": "From {{ price }}"
+    "price_from": "From {{ price }}",
+    "member_price": "Member price",
+    "member_price_hint": "Member price {{ price }} (tax incl.)",
+    "members_only": "Members only",
+    "members_only_login": "Log in to buy",
+    "size": "Size",
+    "size_chart": "Size chart",
+    "size_chart_image": "How to measure",
+    "reviews": "Reviews",
+    "reviews_summary": "{{ rating }} / 5 ({{ count }} reviews)",
+    "review_rating": "{{ rating }} out of 5",
+    "review_verified": "Verified purchase",
+    "review_incentivized": "Incentivized review"
   },
   "collections": {
     "all": "All",
