@@ -1325,3 +1325,28 @@ legend {
 .page-articles { margin: 1.5rem 0 .5rem; }
 .page-articles--list { grid-template-columns: 1fr; }
 .page-articles__more { margin: 0 0 1.5rem; text-align: right; font-size: .9rem; }
+
+
+/* ---------- Banto v0.8: 会員価格・会員限定・採寸表・レビュー ---------- */
+.price__badge { display: inline-block; margin-right: .5rem; padding: .1rem .5rem; border: 1px solid currentColor; font-size: .75rem; letter-spacing: .05em; vertical-align: middle; }
+.price__member-hint { flex-basis: 100%; margin: .35rem 0 0; font-size: .85rem; color: var(--color-text-muted, inherit); }
+.product__members-only { margin: .75rem 0 0; font-size: .9rem; }
+.size-chart { margin: 2rem 0 0; border-top: 1px solid var(--color-border); padding-top: 1rem; }
+.size-chart__title { cursor: pointer; font-weight: 500; letter-spacing: .02em; }
+.size-chart__scroll { overflow-x: auto; margin: 1rem 0 0; }
+.size-chart__table { width: 100%; border-collapse: collapse; font-size: .9rem; white-space: nowrap; }
+.size-chart__table th, .size-chart__table td { padding: .5rem .75rem; border-bottom: 1px solid var(--color-border); text-align: left; }
+.size-chart__table thead th { font-weight: 500; }
+.size-chart__table tr.is-selected { background: color-mix(in srgb, var(--color-text) 6%, var(--color-bg)); }
+.size-chart__image { display: block; max-width: 100%; height: auto; margin: 1rem 0 0; }
+.size-chart__note { margin: .75rem 0 0; font-size: .85rem; white-space: pre-line; }
+.reviews { margin-top: clamp(2.5rem, 6vw, 4rem); }
+.reviews__title { font-size: 1.25rem; font-weight: 500; letter-spacing: .04em; }
+.reviews__summary { display: flex; gap: .75rem; align-items: center; margin: .5rem 0 1.5rem; }
+.reviews__stars { letter-spacing: .1em; }
+.review-list { list-style: none; margin: 0; padding: 0; }
+.review { padding: 1.25rem 0; border-top: 1px solid var(--color-border); }
+.review__head { margin: 0 0 .5rem; }
+.review__title { margin-left: .5rem; }
+.review__body { margin: 0 0 .5rem; white-space: pre-line; }
+.review__meta { margin: 0; font-size: .8rem; opacity: .75; }

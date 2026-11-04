@@ -1,0 +1,40 @@
+{%- comment -%}
+  レビュー（外部プラグインが Banto に置いた要約。Banto v0.6 から。docs/app-data.md）。無ければ何も出さない。
+  「もっと見る」（more_html）は Banto のボタンとスクリプトで、[data-banto-reviews] の中の ol.review-list に li.review を足す。
+  構造化データは Banto が入れるので、ここでは見える HTML だけ。出力は Banto が既定でエスケープする（body の改行は CSS の pre-line で）
+  - reviews: product.reviews
+{%- endcomment -%}
+{%- if reviews -%}
+  <section class="reviews page-width" data-banto-reviews>
+    <h2 class="reviews__title">{{ 'products.reviews' | t }}</h2>
+    {%- if reviews.rating_count > 0 -%}
+      <p class="reviews__summary">
+        <span class="reviews__stars" aria-hidden="true">
+          {%- assign full = reviews.rating | round -%}
+          {%- for i in (1..5) -%}{% if i <= full %}★{% else %}☆{% endif %}{%- endfor -%}
+        </span>
+        <span>{{ 'products.reviews_summary' | t: rating: reviews.rating, count: reviews.rating_count }}</span>
+      </p>
+    {%- endif -%}
+    <ol class="review-list">
+      {%- for item in reviews.items -%}
+        <li class="review">
+          <p class="review__head">
+            <span class="reviews__stars" aria-label="{{ 'products.review_rating' | t: rating: item.rating }}">
+              {%- for i in (1..5) -%}{% if i <= item.rating %}★{% else %}☆{% endif %}{%- endfor -%}
+            </span>
+            {%- if item.title != blank %} <strong class="review__title">{{ item.title }}</strong>{% endif -%}
+          </p>
+          {%- if item.body != blank -%}<p class="review__body">{{ item.body }}</p>{%- endif -%}
+          <p class="review__meta">
+            {{ item.author }}
+            {%- if item.created_at %} · {{ item.created_at | date: '%Y/%m/%d' }}{% endif -%}
+            {%- if item.verified_purchase %} · {{ 'products.review_verified' | t }}{% endif -%}
+            {%- if item.incentivized %} · {{ 'products.review_incentivized' | t }}{% endif -%}
+          </p>
+        </li>
+      {%- endfor -%}
+    </ol>
+    {{- reviews.more_html -}}
+  </section>
+{%- endif -%}

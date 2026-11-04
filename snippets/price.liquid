@@ -1,5 +1,8 @@
 {%- comment -%}
   値段（税込）。セールなら元の値段を線で消して並べる。
+  会員価格（Banto の「会員の条件」、v0.8 から）:
+  - 会員価格の効く会員には、会員価格を値段にして通常の値段を線で消す（variant.price が会員価格、variant.regular_price が通常）
+  - ゲストや条件に合わない人には「会員価格 ¥…」を添える（variant.member_price が値段より安いとき）
   - product: 商品
   - variant: SKU（任意。無ければ商品の最安）
 {%- endcomment -%}
@@ -11,16 +14,28 @@
     assign price = product.price
     assign compare_at = product.compare_at_price
   endif
+  assign member_applied = false
+  assign member_hint = nil
+  if variant and variant.member_price
+    if variant.member_price == variant.price and variant.regular_price > variant.price
+      assign member_applied = true
+      assign compare_at = variant.regular_price
+    elsif variant.member_price < variant.price
+      assign member_hint = variant.member_price
+    endif
+  endif
   assign on_sale = false
   if compare_at and price and compare_at > price
     assign on_sale = true
   endif
 -%}
-<div class="price{% if on_sale %} price--sale{% endif %}" data-noren-price>
+<div class="price{% if on_sale %} price--sale{% endif %}{% if member_applied %} price--member{% endif %}" data-noren-price>
   {%- if price == nil -%}
     <span class="price__unavailable">{{ 'products.unavailable' | t }}</span>
   {%- else -%}
-    {%- if on_sale -%}
+    {%- if member_applied -%}
+      <span class="price__badge">{{ 'products.member_price' | t }}</span>
+    {%- elsif on_sale -%}
       <span class="visually-hidden">{{ 'products.sale_price' | t }}</span>
     {%- endif -%}
     <span class="price__current">
@@ -36,5 +51,9 @@
       <s class="price__compare">{{ compare_at | money }}</s>
     {%- endif -%}
     <span class="price__tax">{{ 'products.tax_included' | t }}</span>
+    {%- if member_hint -%}
+      {%- capture member_money %}{{ member_hint | money }}{% endcapture -%}
+      <p class="price__member-hint">{{ 'products.member_price_hint' | t: price: member_money }}</p>
+    {%- endif -%}
   {%- endif -%}
 </div>

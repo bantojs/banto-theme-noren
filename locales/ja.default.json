@@ -29,7 +29,19 @@
     "regular_price": "通常価格",
     "sale_price": "セール価格",
     "tax_included": "（税込）",
-    "price_from": "{{ price }}〜"
+    "price_from": "{{ price }}〜",
+    "member_price": "会員価格",
+    "member_price_hint": "会員価格 {{ price }}（税込）",
+    "members_only": "会員の方だけ購入できます",
+    "members_only_login": "ログインして購入する",
+    "size": "サイズ",
+    "size_chart": "採寸表",
+    "size_chart_image": "採寸の測り方の図",
+    "reviews": "レビュー",
+    "reviews_summary": "{{ rating }} / 5（{{ count }} 件）",
+    "review_rating": "5 点中 {{ rating }} 点",
+    "review_verified": "購入済み",
+    "review_incentivized": "特典つきのレビュー"
   },
   "collections": {
     "all": "すべて",
